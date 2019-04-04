@@ -1,0 +1,8 @@
+.vote-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+.vote-option {
+  margin: 5px;
+  padding: 5px;
+}

@@ -1,0 +1,38 @@
+.ava {
+  margin: 15px;
+  border: 3px solid rgba(150,180,150,0.8);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  float: left;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.75) inset;
+  -moz-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.75) inset;
+  -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.75) inset;
+  z-index: 3;
+}
+.ava img {
+  position: relative;
+  display: block;
+  width: 100%;
+  border-radius: 50%;
+  z-index: 2;
+  opacity: .5;
+}
+
+.avatar-container {
+  margin: 0 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.voted {
+  opacity: 1;
+  border-color: greenyellow;
+}
+
+.voted img {
+  opacity: 1;
+}

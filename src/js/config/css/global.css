@@ -1,0 +1,20 @@
+/* Global Variables */
+:root {
+    --app-border: #c4c4c4;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex-center {
+  margin: auto;
+}
+
+.span-link {
+  color: blue;
+}
+.span-link:hover {
+  color: lightblue;
+  cursor: pointer;
+}

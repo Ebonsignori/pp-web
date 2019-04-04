@@ -1,0 +1,21 @@
+.repoList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 5px;
+  overflow-y: auto;
+  max-height: 80%;
+}
+
+.repoList div {
+  margin: 5px;
+  color: blue;
+  border: 1px solid black;
+  flex: 1 0 25%;
+  box-sizing: border-box;
+}
+
+.repoList div:hover {
+  color: lightblue;
+  cursor: pointer;
+}
