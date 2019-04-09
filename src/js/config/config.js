@@ -1,7 +1,5 @@
 import { convertToKebabCase } from '../utility/strings'
 
-// import identifierJson from './identifier.json'
-
 // ============================================
 // Github config
 // ============================================
@@ -12,12 +10,7 @@ export const OAUTH_CALLBACK_URL = '/oauth/github'
 // ============================================
 // Server config
 // ============================================
-export let SERVER_URL = 'http://73874bd0.ngrok.io'
-// if (identifierJson.environ === 'local') {
-//   SERVER_URL = 'http://localhost:3000'
-// } else {
-//   SERVER_URL = 'TODO: '
-// }
+export let SERVER_URL = process.env.DEV_URL || 'https://7125f55e.ngrok.io' // TODO: defined default production url
 
 // ============================================
 // Websocket config
