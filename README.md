@@ -1,3 +1,4 @@
-# Planning Poker
+# Dev Setup
 
-There is a lot of hodgepodge of other projects in this code that needs to be cleaned up. Also it isn't styled or robust. It's an PoC for the workflow of the app.
+1. First, start `pp-api` and `ngrok` following the README.md in `pp-api`
+2. Then, `npm run dev`

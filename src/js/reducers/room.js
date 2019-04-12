@@ -52,13 +52,18 @@ export default function roomReducer (state = initialState, action) {
         users
       }
 
+    case WS_USERS:
+      return {
+        ...state,
+        users: action.payload.users
+      }
+
     // When the user joins the room (only emitted to user)
     case WS_JOINED:
       return {
         ...state,
         gameState: action.payload.gameState,
         stories: action.payload.stories,
-        users: action.payload.users,
         roomConnected: true
       }
 
