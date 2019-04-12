@@ -5,12 +5,13 @@ import { convertToKebabCase } from '../utility/strings'
 // ============================================
 export const GH_APP_NAME = 'Planning Poker'
 export const GH_APP_INSTALL_URL = `https://github.com/apps/${convertToKebabCase(GH_APP_NAME)}/installations/new`
-export const OAUTH_CALLBACK_URL = '/oauth/github'
+export const GITHUB_OAUTH_URL = '/oauth/github'
 
 // ============================================
-// Server config
+// App config
 // ============================================
-export let SERVER_URL = process.env.DEV_URL || 'https://7125f55e.ngrok.io' // TODO: defined default production url
+export const WEB_URL = process.env.WEB_URL
+export let API_URL = process.env.API_URL
 
 // ============================================
 // Websocket config

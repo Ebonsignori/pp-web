@@ -1,11 +1,11 @@
 import io from 'socket.io-client'
-import { SERVER_URL, WEBSOCKET_TIMEOUT } from '../config/config'
+import { API_URL, WEBSOCKET_TIMEOUT } from '../config/config'
 import { WEBSOCKET_ACTIONS, WS_USER_NOT_LOGGED_IN, WS_JOINED } from '../constants/action_types'
 import { notLoggedIn } from '../actions/user'
 
 export function initSocket (store) {
   // Initialize socket-io object
-  const socket = io(SERVER_URL, {
+  const socket = io(API_URL, {
     transports: ['websocket'],
     timeout: WEBSOCKET_TIMEOUT,
     autoConnect: false
@@ -20,12 +20,8 @@ export function initSocket (store) {
   // Add an event listener for every websocket action. Each listener fires a redux store dispatch with payload contents
   Object.keys(websocketActions).forEach(type =>
     socket.on(WEBSOCKET_ACTIONS[type], payload => {
-      if (type === WS_JOINED) {
-        const loggedInUser = store.getState().user.username
-        if (loggedInUser === payload.username) {
-          store.dispatch({ thisUser: true, type: type, date: new Date(), payload, socket })
-        }
-      } else if (type === WS_USER_NOT_LOGGED_IN) {
+      if (type === WS_USER_NOT_LOGGED_IN) {
+        console.log('Not logged in from websocket')
         store.dispatch(notLoggedIn())
       } else {
         store.dispatch({ type: type, date: new Date(), payload, socket })

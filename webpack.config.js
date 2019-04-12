@@ -51,7 +51,12 @@ async function webpackConfig () {
       new ExtractTextPlugin({ filename: 'style.css' }),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-        'process.env.DEV_URL': JSON.stringify(await getDevUrl())
+        'process.env.API_URL': process.env.NODE_ENV === 'production'
+          ? JSON.stringify('https://13944377.ngrok.io')
+          : JSON.stringify(await getDevUrl()),
+        'process.env.WEB_URL': process.env.NODE_ENV === 'production'
+          ? JSON.stringify('https://ebonsignori.github.io/planning-poker')
+          : JSON.stringify('http://localhost:8086')
       })
     ],
     devServer: {
@@ -86,9 +91,9 @@ async function getDevUrl () {
     try {
       resp = await axios.get(`http://localhost:${process.env.NGROK_HELPER_PORT}/api/tunnels`)
       const tunnels = resp.data && resp.data.tunnels
-      const httpTunnel = tunnels[0].public_url
-      // const httpsTunnel = tunnels[1].public_url
-      devUrl = httpTunnel
+      // const httpTunnel = tunnels[0].public_url
+      const httpsTunnel = tunnels[1].public_url
+      devUrl = httpsTunnel
       if (!firstError) {
         console.log('Ngrok connection found!')
       }

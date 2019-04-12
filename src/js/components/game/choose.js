@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Loader from 'react-loader-spinner'
 import MarkdownGitHub from 'react-markdown-github'
 
-import { updateVotingLabel, broadcastVotingLabel, beginVoting } from '../../actions/room'
+import { beginVoting } from '../../actions/room'
 import { openInNewTab } from '../../utility/utility'
 
 import './choose.css'
@@ -13,32 +13,27 @@ class Choose extends React.Component {
   constructor (props) {
     super(props)
 
-    this.broadcastVotingLabel = this.broadcastVotingLabel.bind(this)
-    this.selectIssue = this.selectIssue.bind(this)
+    this.selectStory = this.selectStory.bind(this)
   }
 
-  selectIssue (issue) {
-    beginVoting(this.props.owner, this.props.repo, issue)
-  }
-
-  broadcastVotingLabel () {
-    broadcastVotingLabel(this.props.owner, this.props.repo, this.props.votingLabel)
+  selectStory (story) {
+    beginVoting(this.props.roomId, story)
   }
 
   render () {
-    let slug = `${this.props.owner}/${this.props.repo}`
-    let issuesList
-    if (Array.isArray(this.props.issues) && this.props.issues.length > 0) {
-      issuesList = this.props.issues.map((issue) => {
+    let storiesList
+    if (Array.isArray(this.props.stories) && this.props.stories.length > 0) {
+      storiesList = this.props.stories.map((story) => {
         return (
-          <div className='issue-box' key={`issue:${issue.title}`}>
-            <h2 className='title'>{issue.title}</h2>
+          <div className='story-box' key={`story:${story.title}`}>
+            <h2 className='title'>{story.title}</h2>
             <hr />
             <MarkdownGitHub
-              source={issue.body}
+              source={story.body}
             />
-            <button className='issue-btn vote' onClick={() => this.selectIssue(issue)}>Vote!</button>
-            <button className='issue-btn view-in-gh' onClick={() => openInNewTab(issue.html_url)}>View in Github</button>
+            <button className='story-btn vote' onClick={() => this.selectStory(story)}>Vote!</button>
+            {/* TODO: only view in github when github issue */}
+            <button className='story-btn view-in-gh' onClick={() => openInNewTab(story.html_url)}>View in Github</button>
           </div>
         )
       })
@@ -47,9 +42,9 @@ class Choose extends React.Component {
     return (
       <React.Fragment>
         {/* TODO: Loader */}
-        {!this.props.roomConnected || !this.props.issuesFetched ? (
+        {!this.props.roomConnected ? (
           <div className='flex-center'>
-            <p>Fetching issues for {slug} ... </p>
+            <p>Fetching stories for room... </p>
             <Loader
               type='Puff'
               color='#00BFFF'
@@ -59,15 +54,10 @@ class Choose extends React.Component {
           </div>
         ) : (
           <React.Fragment>
-            <h3>Issues for {slug}</h3>
-            <p>Is an issues missing? Try adding the <b>{this.props.votingLabel}</b> label to it in GitHub.</p>
-            <input onChange={(e) => {
-              // TODO: Validate
-              this.props.dispatch(updateVotingLabel(e.target.value))
-            }} value={this.props.votingLabel} /> <button onClick={this.broadcastVotingLabel}>Change voting label</button>
-            <div className='issueList'>
+            <h3>Stories</h3>
+            <div className='stories-list'>
               {/* TODO: programmatically show/set swag label. */}
-              {issuesList || <li>No issues with label 'swag-ready'</li>}
+              {storiesList || <li>No stories remain in this room.</li>}
             </div>
           </React.Fragment>
         )}
@@ -79,11 +69,9 @@ class Choose extends React.Component {
 const mapStateToProps = (state) => {
   const room = state.room
   return {
-    owner: room.owner,
-    repo: room.repo,
+    roomId: room.roomId,
     roomConnected: room.roomConnected,
-    issuesFetched: room.issuesFetched,
-    issues: room.issues,
+    stories: room.stories,
     votingLabel: room.votingLabel
   }
 }

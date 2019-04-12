@@ -1,13 +1,19 @@
-import { OPEN_MODAL, CLOSE_MODAL } from '../constants/action_types'
-import { LOGIN } from '../constants/modals'
+import { OPEN_MODAL, CLOSE_MODAL, WS_JOINED } from '../constants/action_types'
+import { ACCOUNT, JOIN_ROOM } from '../constants/modals'
 
 // Modals open/close state
 const InitialState = {
-  [LOGIN]: false
+  [ACCOUNT]: false,
+  [JOIN_ROOM]: false
 }
 
 export default function modalReducer (state = InitialState, action) {
   switch (action.type) {
+    case WS_JOINED:
+      return {
+        ...state,
+        [JOIN_ROOM]: false
+      }
     case OPEN_MODAL:
       return {
         ...state,
@@ -25,9 +31,13 @@ export default function modalReducer (state = InitialState, action) {
 
 function getModalState (modal, openState) {
   switch (modal) {
-    case LOGIN:
+    case ACCOUNT:
       return {
-        [LOGIN]: openState
+        [ACCOUNT]: openState
+      }
+    case JOIN_ROOM:
+      return {
+        [JOIN_ROOM]: openState
       }
     default:
       console.error(`No modal for modal ${modal} passed into closeModal(modal)`)

@@ -1,23 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { logout } from '../actions/user'
+import { logout, loggedIn } from '../actions/user'
 import { listMemberships } from '../actions/memberships'
 import { openModal } from '../actions/modals'
 import { resetGame } from '../actions/room'
 
-import { LOGIN } from '../constants/modals'
+import { ACCOUNT } from '../constants/modals'
 
-import LoginModal from './user/login-modal'
-import Memberships from './user/memberships'
+import AccountModal from './user/account-modal'
 import GameController from './game/game-controller'
 import UserVotes from './game/user-votes'
+import UserRooms from './user/user-rooms'
+import JoinRoomModal from './room/join-room-modal'
 
 import './app.css'
 import '../config/css/global.css'
 import '../config/css/modal.css'
 
 import Modal from 'react-modal'
+import { jsonGet } from '../utility/fetch'
+import CreateRoom from './room/create-room'
 Modal.setAppElement('body')
 
 class App extends React.Component {
@@ -25,16 +28,27 @@ class App extends React.Component {
     super(props)
 
     this.listMemberships = this.listMemberships.bind(this)
-    this.login = this.login.bind(this)
+    this.openAccountModal = this.openAccountModal.bind(this)
     this.logout = this.logout.bind(this)
+  }
+
+  componentDidMount () {
+    (async () => {
+      if (!this.props.loggedIn) {
+        const response = await jsonGet('/users/logged-in')
+        if (response.status === 200) {
+          this.props.dispatch(loggedIn(response))
+        }
+      }
+    })()
   }
 
   listMemberships () {
     this.props.dispatch(listMemberships())
   }
 
-  login () {
-    this.props.dispatch(openModal(LOGIN))
+  openAccountModal () {
+    this.props.dispatch(openModal(ACCOUNT))
   }
 
   logout () {
@@ -42,17 +56,20 @@ class App extends React.Component {
   }
 
   render () {
-    let mainContainer = <div className='flex-center'>Login to view repos.</div>
-    let dash = <h2>Please login.</h2>
+    let mainContainer = <div className='flex-center'>Login.</div>
+    let dash = <h2>Planning Poker (WIP!)</h2>
     let resetBtn = null
     if (this.props.loggedIn) {
-      mainContainer = <Memberships />
-      dash = <button onClick={this.listMemberships}>Refresh Repos</button>
       if (this.props.roomConnected) {
         mainContainer = <GameController />
         dash = <UserVotes />
-        resetBtn = <button onClick={() => resetGame(this.props.owner, this.props.repo)}>Reset Game</button>
+        resetBtn = <button onClick={() => resetGame(this.props.roomId)}>Go back to stories</button>
+      } else if (this.props.creatingRoom) {
+        mainContainer = <CreateRoom />
+      } else {
+        mainContainer = <UserRooms />
       }
+      // dash = <button onClick={this.listMemberships}>Refresh Repos</button>
     }
 
     return (
@@ -70,9 +87,10 @@ class App extends React.Component {
                 <button
                   style={{ marginLeft: '15px' }}
                   onClick={this.logout}>Logout</button>
+                <button onClick={this.openAccountModal}>View Account</button>
               </React.Fragment>
             )
-              : <button onClick={this.login}>Login</button>}
+              : <button onClick={this.openAccountModal}>Login</button>}
           </div>
           <div className='chat-container' />
           <div className='main-container'>
@@ -81,7 +99,8 @@ class App extends React.Component {
         </div>
 
         {/* Modals */}
-        <LoginModal />
+        <AccountModal />
+        <JoinRoomModal />
 
       </React.Fragment>
     )
@@ -90,12 +109,12 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    creatingRoom: state.room.creatingRoom,
     loggedIn: state.user.loggedIn,
     roomConnected: state.room.roomConnected,
     username: state.user.username,
     avatar: state.user.avatar,
-    owner: state.room.owner,
-    repo: state.room.repo
+    roomId: state.room.roomId
   }
 }
 

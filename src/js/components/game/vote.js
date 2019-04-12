@@ -17,7 +17,7 @@ export default class Vote extends React.Component {
   }
 
   broadcastVote (value) {
-    broadcastVote(this.props.owner, this.props.repo, value)
+    broadcastVote(this.props.roomId, value)
   }
 
   renderVoteOptions () {
@@ -32,11 +32,11 @@ export default class Vote extends React.Component {
   }
 
   showResults () {
-    showResults(this.props.owner, this.props.repo)
+    showResults(this.props.roomId)
   }
 
   render () {
-    const issue = this.props.issue
+    const story = this.props.story
     return (
       <React.Fragment>
         <h1>Options</h1>
@@ -48,16 +48,16 @@ export default class Vote extends React.Component {
         <button onClick={this.showResults}>Close Voting</button>
         <hr />
         <h2>Voting on</h2>
-        {issue && (
-          <div className='issueList'>
+        {story && (
+          <div className='story-list'>
 
-            <div className='issue-box' key={`issue:${issue.title}`}>
-              <h2 className='title'>{issue.title}</h2>
+            <div className='story-box' key={`story:${story.title}`}>
+              <h2 className='title'>{story.title}</h2>
               <hr />
               <MarkdownGitHub
-                source={issue.body}
+                source={story.body}
               />
-              <button className='issue-btn view-in-gh' onClick={() => openInNewTab(issue.html_url)}>View in Github</button>
+              <button className='story-btn view-in-gh' onClick={() => openInNewTab(story.sourceUrl)}>View in Github</button>
             </div>
           </div>
         )}

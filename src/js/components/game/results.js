@@ -18,23 +18,24 @@ export default class Results extends React.Component {
 
   determineVoteResults () {
     const tally = {}
+    let user = {}
     const voteResults = Object.entries(this.props.userVotes).map(entry => {
-      const user = this.props.users.find(u => u.username === entry[0])
+      user = this.props.users.find(u => u.username === entry[0])
       const choiceKey = String(entry[1])
       if (!tally[choiceKey]) tally[choiceKey] = 0
       tally[choiceKey] = Number(tally[choiceKey]) + 1
-      if (user && Array.isArray(user.photos) && user.photos.length > 0) {
-        return (
-          <div className='voter-wrapper' key={`voter: ${user.username}`}>
-            <div
+      // if (user && Array.isArray(user.photos) && user.photos.length > 0) {
+      return (
+        <div className='voter-wrapper' key={`voter: ${user && user.username}`}>
+          {/* <div
               className={`ava${this.props.userVotes[user.username] === 'voted' ? ' voted' : ''}`}>
               <img src={user.photos[0] && user.photos[0].value} />
-            </div>
-            <span>Chose: {entry[1]}</span>
-          </div>
+            </div> */}
+          <span>{user && user.username} chose: {entry[1]}</span>
+        </div>
 
-        )
-      }
+      )
+      // }
     })
 
     return { voteResults, tally }
@@ -45,7 +46,7 @@ export default class Results extends React.Component {
     return sortedTallies.map(entry => {
       return (
         <div className='decision-wrapper' key={`decision: ${entry[0]}`}>
-          <button onClick={() => this.broadcastDecision(entry[0])}>Apply swag:{entry[0]} to Issue</button>
+          <button onClick={() => this.broadcastDecision(entry[0])}>Apply swag:{entry[0]} to Github Issue</button>
           <span>({entry[1]} votes) </span>
         </div>
       )
@@ -53,18 +54,16 @@ export default class Results extends React.Component {
   }
 
   broadcastDecision (decision) {
-    broadcastDecision(this.props.owner, this.props.repo, this.props.issue, decision, this.props.votingLabel)
+    // TODO: Find better way of extracting owner and repo
+    // const { owner, repo } = ownerAndRepoFromUrl(this.props.story.html_url)
+    broadcastDecision(this.props.roomId, this.props.story.githubIssueOwner, this.props.story.githubIssueRepo, this.props.story.githubIssueNumber, decision, this.props.votingLabel)
   }
-
-  // reset () {
-  //   reset(this.props.owner, this.props.repo)
-  // }
 
   render () {
     const { voteResults, tally } = this.determineVoteResults()
     const decisionButtons = this.renderDecisionBtns(tally)
 
-    const issue = this.props.issue
+    const story = this.props.story
     return (
       <React.Fragment>
         <h1>Results</h1>
@@ -76,16 +75,16 @@ export default class Results extends React.Component {
         </div>
         <hr />
         <h2>Deciding on</h2>
-        {issue && (
-          <div className='issueList'>
+        {story && (
+          <div className='story-list'>
 
-            <div className='issue-box' key={`issue:${issue.title}`}>
-              <h2 className='title'>{issue.title}</h2>
+            <div className='story-box' key={`story:${story.title}`}>
+              <h2 className='title'>{story.title}</h2>
               <hr />
               <MarkdownGitHub
-                source={issue.body}
+                source={story.body}
               />
-              <button className='issue-btn view-in-gh' onClick={() => openInNewTab(issue.html_url)}>View in Github</button>
+              <button className='story-btn view-in-gh' onClick={() => openInNewTab(story.sourceUrl)}>View in Github</button>
             </div>
           </div>
         )}

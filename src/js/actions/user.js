@@ -1,7 +1,7 @@
 import { USER_LOGOUT, USER_LOGIN } from '../constants/action_types'
 import { jsonGet } from '../utility/fetch'
 import { openModal } from './modals'
-import { LOGIN } from '../constants/modals'
+import { ACCOUNT } from '../constants/modals'
 
 export const userNotLoggedIn = {
   type: USER_LOGOUT
@@ -11,7 +11,11 @@ export function loggedIn (profile) {
   return {
     type: USER_LOGIN,
     username: profile.username,
-    avatar: profile && profile.avatar
+    givenName: profile.givenName,
+    familyName: profile.familyName,
+    email: profile.email,
+    avatar: profile.avatar,
+    githubLinked: profile.githubLinked
   }
 }
 
@@ -30,6 +34,6 @@ export function notLoggedIn () {
   return dispatch => {
     // Update login status and open login modal
     dispatch(userNotLoggedIn)
-    dispatch(openModal(LOGIN))
+    dispatch(openModal(ACCOUNT))
   }
 }

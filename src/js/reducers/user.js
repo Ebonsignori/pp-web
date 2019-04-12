@@ -1,5 +1,4 @@
 import {
-  WS_USER_LOGGED_IN,
   USER_LOGIN,
   USER_LOGOUT,
   FETCHING_MEMBERSHIPS,
@@ -9,8 +8,13 @@ import {
 const initialState = {
   loggedIn: false,
   username: undefined,
+  givenName: undefined,
+  familyName: undefined,
+  email: undefined,
   avatar: undefined,
   membershipsFetched: undefined,
+  githubLinked: false,
+  userRooms: [],
   orgs: [],
   repos: []
 }
@@ -23,14 +27,11 @@ export default function userReducer (state = initialState, action) {
         ...state,
         loggedIn: true,
         username: action.username,
-        avatar: action.avatar
-      }
-    case WS_USER_LOGGED_IN:
-      return {
-        ...state,
-        loggedIn: true,
-        username: action.payload.username,
-        avatar: action.payload.avatar
+        givenName: action.givenName,
+        familyName: action.familyName,
+        email: action.email,
+        avatar: action.avatar,
+        githubLinked: action.githubLinked
       }
 
     case USER_LOGOUT:

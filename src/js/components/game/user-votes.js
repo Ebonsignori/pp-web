@@ -22,14 +22,17 @@ class UserVotes extends React.Component {
 
   renderAvatars () {
     return this.props.users.map((user) => {
-      if (user && Array.isArray(user.photos) && user.photos.length > 0) {
+      const image = user && user.avatarUrl ? user.avatarUrl : 'https://img.icons8.com/ios/100/000000/user-filled.png' // TODO: Replace default
+      if (user && user.avatarUrl) {
         return (
           <div
             key={`avatar: ${user.username}`}
             className={`ava${this.props.userVotes[user.username] === 'voted' ? ' voted' : ''}`}>
-            <img src={user.photos[0] && user.photos[0].value} />
+            <img src={image} />
           </div>
         )
+      } else {
+
       }
     })
   }

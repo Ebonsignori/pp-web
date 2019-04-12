@@ -1,16 +1,18 @@
 // Memberships (Orgs and Repos)
-export const FETCHING_MEMBERSHIPS = 'fetching_memberships'
-export const MEMBERSHIPS_LISTED = 'memberships_listed'
+export const FETCHING_MEMBERSHIPS = 'FETCHING_MEMBERSHIPS'
+export const MEMBERSHIPS_LISTED = 'MEMBERSHIPS_LISTED'
 
 // Room
-export const FETCHING_ROOM = 'fetching_room'
-export const UPDATE_VOTE_LABEL = 'update_vote_label'
+export const CREATING_ROOM = 'CREATING_ROOM'
+export const FETCHING_ROOM = 'FETCHING_ROOM'
+export const UPDATE_VOTE_LABEL = 'UPDATE_VOTE_LABEL'
 
 // =======================
 // Modal Management
 // =======================
 export const OPEN_MODAL = 'OPEN_MODAL'
 export const CLOSE_MODAL = 'CLOSE_MODAL'
+export const OPEN_WITH_CONTENT = 'OPEN_WITH_CONTENT'
 
 // =======================
 // Websocket
@@ -31,13 +33,16 @@ export const WS_USER_NOT_LOGGED_IN = 'WS_USER_NOT_LOGGED_IN'
 
 // - - - Room - - -
 // Issues
-export const WS_ISSUES = 'WS_ISSUES'
+export const FETCHING_ISSUES = 'FETCHING_ISSUES'
+export const ISSUES = 'ISSUES' // TODO: remove WS issues as now fetching /w REST
+export const WS_STORIES = 'WS_STORIES'
 export const WS_JOINED = 'WS_JOINED'
 export const JOIN_ROOM = 'join_room'
 // Labels
 export const VOTE_LABEL = 'vote_label'
 export const WS_VOTE_LABEL = 'WS_VOTE_LABEL'
 // Users
+export const WS_USER = 'WS_USER'
 export const WS_USERS = 'WS_USERS'
 // Game State
 export const BEGIN_VOTE = 'begin_vote'
@@ -67,11 +72,17 @@ export const WEBSOCKET_ACTIONS = {
   // User
   WS_USER_LOGGED_IN: 'user_logged_in',
   WS_USER_NOT_LOGGED_IN: 'user_not_logged_in',
+
+  // Room users
+  WS_USER: 'user',
   WS_USERS: 'users',
+
   // Game State
   WS_GAME_STATE: 'game_state',
-  // Issues
-  WS_ISSUES: 'issues',
+
+  // Stories
+  WS_STORIES: 'stories',
+
   // Labels
   WS_VOTE_LABEL: 'vote_label'
 }
