@@ -1,0 +1,10 @@
+.user-rooms-list-item {
+  width: 60%;
+  margin: 5px;
+  border: 1px solid black;
+}
+.user-rooms-list {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+}

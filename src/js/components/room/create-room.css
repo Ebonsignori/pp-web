@@ -1,0 +1,91 @@
+.create-room-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  max-height: 80%;
+  overflow-y: auto;
+}
+
+.create-room-options-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-from-github {
+  margin: auto;
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+}
+.add-from-github input {
+  margin: 10px;
+  width: 80%;
+}
+.add-from-github button {
+  width: 80%;
+  background-color: lightgreen;
+}
+
+.issue-list-wrapper {
+  height: 80%;
+  max-height: 80%;
+}
+.issue-list {
+  height: 80%;
+  max-height: 80%;
+  width: 75%;
+  overflow-y: auto;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+}
+
+.issue-box {
+  border: 1px solid black;
+  text-align: left;
+  padding: 10px;
+  margin: 10px
+}
+
+.title {
+  text-align: left;
+}
+
+.issue-btn {
+  display: inline-block;
+  background-color: lightgreen;
+  border: 1px solid black;
+  border-radius: 10px;
+  color: white;
+  font-size: large;
+  padding: 15px 25px;
+}
+
+.issue-btn:hover {
+  opacity: .8;
+  cursor: pointer;
+}
+
+.add {
+  background-color: lightgreen;
+}
+
+.remove {
+  background-color: lightcoral;
+}
+
+.view-in-gh {
+  margin-left: 15px;
+  background-color: black;
+}
+
+.create-room-btn {
+  padding: 20px;
+  margin: auto;
+  width: 50%;
+  color: white;
+  background-color: green
+}
