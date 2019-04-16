@@ -3,13 +3,11 @@ import {
   FETCHING_ROOM,
   OPEN_WITH_CONTENT,
   WS_JOINED,
-  WS_STORIES,
+  WS_VOTE,
   FETCHING_ISSUES,
   ISSUES,
-  WS_VOTE_LABEL,
   WS_USERS,
   WS_GAME_STATE,
-  UPDATE_VOTE_LABEL,
   USER_LOGOUT,
   WS_USER
 } from '../constants/action_types'
@@ -22,6 +20,7 @@ const initialState = {
   votingLabel: undefined,
   gameState: {},
   users: [],
+  userVote: undefined,
   issuesFetched: false,
   issues: []
 }
@@ -109,6 +108,11 @@ export default function roomReducer (state = initialState, action) {
       return {
         ...state,
         gameState: action.payload.gameState
+      }
+    case WS_VOTE:
+      return {
+        ...state,
+        userVote: action.payload.userVote
       }
     case OPEN_WITH_CONTENT:
       return {

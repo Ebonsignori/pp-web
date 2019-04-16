@@ -40,7 +40,6 @@ export const WS_JOINED = 'WS_JOINED'
 export const JOIN_ROOM = 'join_room'
 // Labels
 export const VOTE_LABEL = 'vote_label'
-export const WS_VOTE_LABEL = 'WS_VOTE_LABEL'
 // Users
 export const WS_USER = 'WS_USER'
 export const WS_USERS = 'WS_USERS'
@@ -49,6 +48,7 @@ export const BEGIN_VOTE = 'begin_vote'
 export const SHOW_RESULTS = 'show_results'
 export const WS_GAME_STATE = 'WS_GAME_STATE'
 export const RESET = 'reset'
+export const WS_VOTE = 'WS_VOTE'
 // Voting
 export const VOTE = 'vote'
 
@@ -79,10 +79,9 @@ export const WEBSOCKET_ACTIONS = {
 
   // Game State
   WS_GAME_STATE: 'game_state',
+  WS_VOTE: 'vote',
 
   // Stories
-  WS_STORIES: 'stories',
+  WS_STORIES: 'stories'
 
-  // Labels
-  WS_VOTE_LABEL: 'vote_label'
 }

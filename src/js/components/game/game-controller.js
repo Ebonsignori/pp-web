@@ -9,7 +9,7 @@ class GameController extends React.Component {
   render () {
     return (
       <React.Fragment>
-        {renderCurrentStage(this.props.roomId, this.props.gameState, this.props.users, this.props.votingLabel)}
+        {renderCurrentStage(this.props.roomId, this.props.gameState, this.props.userVote, this.props.users, this.props.votingLabel)}
       </React.Fragment>
     )
   }
@@ -22,7 +22,7 @@ const STAGES = {
   RESULTS: 'results'
 }
 
-function renderCurrentStage (roomId, { stage, story, userVotes }, users, votingLabel) {
+function renderCurrentStage (roomId, { stage, story, userVotes }, userVote, users, votingLabel) {
   switch (stage) {
     case STAGES.CHOSE:
       return <Choose />
@@ -32,6 +32,7 @@ function renderCurrentStage (roomId, { stage, story, userVotes }, users, votingL
         story={story}
         users={users}
         userVotes={userVotes}
+        userVote={userVote}
       />
     case STAGES.RESULTS:
       return <Results
@@ -52,6 +53,7 @@ const mapStateToProps = (state) => {
     roomId: room.roomId,
     gameState: room.gameState,
     users: room.users,
+    userVote: room.userVote,
     votingLabel: room.votingLabel
   }
 }

@@ -45,6 +45,14 @@ export default class Vote extends React.Component {
         </div>
         <p>{countUserVotes(this.props.userVotes)} out of {this.props.users && this.props.users.length} votes in.</p>
         {/* TODO: Confirmation */}
+        {this.props.userVote
+          ? <React.Fragment>
+            <p>Hover to see your vote:</p>
+            <div className='hidden-vote'>{this.props.userVote}</div>
+          </React.Fragment>
+          : <p>You have not voted.</p>
+        }
+        <br />
         <button onClick={this.showResults}>Close Voting</button>
         <hr />
         <h2>Voting on</h2>
