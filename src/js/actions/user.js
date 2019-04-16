@@ -21,7 +21,7 @@ export function loggedIn (profile) {
 
 export function logout () {
   return async dispatch => {
-    const logoutResp = await jsonGet('/oauth/logout')
+    const logoutResp = await jsonGet('/users/logout')
     if (logoutResp && logoutResp.status === 200) {
       dispatch(userNotLoggedIn) // logout user, but don't open login modal
     } else {

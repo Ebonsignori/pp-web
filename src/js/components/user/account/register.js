@@ -32,7 +32,7 @@ export default class Register extends React.Component {
         password: this.state.password
       })
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         this.props.setRegistering(false)
         this.props.dispatch(loggedIn(response))
       } else {

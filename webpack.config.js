@@ -52,7 +52,7 @@ async function webpackConfig () {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         'process.env.API_URL': process.env.NODE_ENV === 'production'
-          ? JSON.stringify('https://13944377.ngrok.io')
+          ? JSON.stringify(await getDevUrl(true))
           : JSON.stringify(await getDevUrl()),
         'process.env.WEB_URL': process.env.NODE_ENV === 'production'
           ? JSON.stringify('https://ebonsignori.github.io/planning-poker')
@@ -81,24 +81,24 @@ async function webpackConfig () {
   }
 }
 
-async function getDevUrl () {
+async function getDevUrl (useHttps) {
   const axios = require('axios')
   let ngrokUp = false
   let firstError = true
-  let devUrl
   while (!ngrokUp) {
     let resp
     try {
       resp = await axios.get(`http://localhost:${process.env.NGROK_HELPER_PORT}/api/tunnels`)
       const tunnels = resp.data && resp.data.tunnels
-      // const httpTunnel = tunnels[0].public_url
-      const httpsTunnel = tunnels[1].public_url
-      devUrl = httpsTunnel
+      const http = tunnels[0].public_url
+      const https = tunnels[1].public_url
+      const devUrl = useHttps ? https : http
       if (!firstError) {
         console.log('Ngrok connection found!')
       }
       console.log(`Ngrok Url: ${devUrl}`)
       ngrokUp = true
+      return devUrl
     } catch (err) {
       if (firstError) {
         console.log('Ngrok is not running. Please start it listening on the api port.')
@@ -108,8 +108,6 @@ async function getDevUrl () {
       await sleep(1000) // Check every 1 seconds for ngrok connection
     }
   }
-
-  return devUrl
 }
 
 async function sleep (ms) {
