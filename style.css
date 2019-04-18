@@ -1,0 +1,800 @@
+.vote-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+.vote-option {
+  margin: 5px;
+  padding: 5px;
+}
+
+.hidden-vote {
+  line-height: 50px;
+  width: 50px;
+  height: 50px;
+  color: black;
+  background-color: black;
+  border: 1px solid white;
+}
+.hidden-vote:hover {
+  color: white;
+}
+.react-toggle {
+  touch-action: pan-x;
+
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.react-toggle-screenreader-only {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.react-toggle--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  -webkit-transition: opacity 0.25s;
+  transition: opacity 0.25s;
+}
+
+.react-toggle-track {
+  width: 50px;
+  height: 24px;
+  padding: 0;
+  border-radius: 30px;
+  background-color: #4D4D4D;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.react-toggle:hover:not(.react-toggle--disabled) .react-toggle-track {
+  background-color: #000000;
+}
+
+.react-toggle--checked .react-toggle-track {
+  background-color: #19AB27;
+}
+
+.react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
+  background-color: #128D15;
+}
+
+.react-toggle-track-check {
+  position: absolute;
+  width: 14px;
+  height: 10px;
+  top: 0px;
+  bottom: 0px;
+  margin-top: auto;
+  margin-bottom: auto;
+  line-height: 0;
+  left: 8px;
+  opacity: 0;
+  -webkit-transition: opacity 0.25s ease;
+  -moz-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
+}
+
+.react-toggle--checked .react-toggle-track-check {
+  opacity: 1;
+  -webkit-transition: opacity 0.25s ease;
+  -moz-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
+}
+
+.react-toggle-track-x {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 0px;
+  bottom: 0px;
+  margin-top: auto;
+  margin-bottom: auto;
+  line-height: 0;
+  right: 10px;
+  opacity: 1;
+  -webkit-transition: opacity 0.25s ease;
+  -moz-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
+}
+
+.react-toggle--checked .react-toggle-track-x {
+  opacity: 0;
+}
+
+.react-toggle-thumb {
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 22px;
+  height: 22px;
+  border: 1px solid #4D4D4D;
+  border-radius: 50%;
+  background-color: #FAFAFA;
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  -webkit-transition: all 0.25s ease;
+  -moz-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}
+
+.react-toggle--checked .react-toggle-thumb {
+  left: 27px;
+  border-color: #19AB27;
+}
+
+.react-toggle--focus .react-toggle-thumb {
+  -webkit-box-shadow: 0px 0px 3px 2px #0099E0;
+  -moz-box-shadow: 0px 0px 3px 2px #0099E0;
+  box-shadow: 0px 0px 2px 3px #0099E0;
+}
+
+.react-toggle:active:not(.react-toggle--disabled) .react-toggle-thumb {
+  -webkit-box-shadow: 0px 0px 5px 5px #0099E0;
+  -moz-box-shadow: 0px 0px 5px 5px #0099E0;
+  box-shadow: 0px 0px 5px 5px #0099E0;
+}
+
+.react-spinner-loader-svg svg {
+  -webkit-transform-origin: 50% 65%;
+          transform-origin: 50% 65%;
+}
+
+.react-spinner-loader-svg svg polygon {
+  stroke-dasharray: 17;
+  -webkit-animation: dash 2.5s cubic-bezier(0.35, 0.04, 0.63, 0.95) infinite;
+          animation: dash 2.5s cubic-bezier(0.35, 0.04, 0.63, 0.95) infinite;
+}
+
+@-webkit-keyframes dash {
+  to {
+    stroke-dashoffset: 136;
+  }
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 136;
+  }
+}
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+.react-spinner-loader-svg-calLoader {
+  width: 230px;
+  height: 230px;
+  transform-origin: 115px 115px;
+  animation: 1.4s linear infinite loader-spin;
+}
+
+.react-spinner-loader-svg-cal-loader__path {
+
+  animation: 1.4s ease-in-out infinite loader-path;
+}
+
+@keyframes loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader-path {
+  0% {
+    stroke-dasharray: 0, 580, 0, 0, 0, 0, 0, 0, 0;
+  }
+  50% {
+    stroke-dasharray: 0, 450, 10, 30, 10, 30, 10, 30, 10;
+  }
+  100% {
+    stroke-dasharray: 0, 580, 0, 0, 0, 0, 0, 0, 0;
+  }
+}
+/* html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#root {
+    min-height: 100vh;
+    min-width: 100vw;
+    height: 100vh;
+    width: 100vw;
+    overflow: auto;
+} */
+
+/* Top level app grid */
+.app-grid {
+    /* min-height: 100%; */
+    /* min-width: 100%; */
+    /* height: 100%; */
+    /* width: 100%; */
+    display: grid;
+    grid-template-rows: 150px auto;
+    grid-template-columns: 30% 50% 20%;
+    grid-template-areas:
+            "dash dash login"
+            "main main main";
+    /* border: 1px solid black; */
+    grid-gap: 1px;
+    background-color: black;
+}
+
+/* Create grid-gap border */
+.app-grid > div {
+    background-color: white;
+    text-align: center;
+    max-height: 100%;
+    max-width: 100%;
+    height: 100%;
+    width: 100%;
+}
+
+.dash-container {
+    grid-area: dash;
+
+    /* TEMP */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.main-container {
+    grid-area: main;
+
+    /* TEMP */
+    display: flex;
+    align-items: center;
+    flex-direction:  column;
+}
+.login-container {
+    grid-area: login;
+
+    /* TEMP */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.chat-container {
+    grid-area: chat;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+/* TODO: move this and login to separate component */
+.avatar-logo {
+  width: 30px;
+  height: 30px;
+  margin-left: 5px;
+}
+/* .login-modal {
+  height: 50%;
+  width: 50%
+} */
+
+/* .center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+} */
+
+.github-button {
+  margin: 50px;
+}
+
+.github-button img {
+  width: 40px;
+  height: 40px;
+}
+.stories-list {
+  max-height: 80%;
+  width: 75%;
+  overflow-y: auto;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+}
+
+.story-box {
+  border: 1px solid black;
+  text-align: left;
+  padding: 10px;
+  margin: 10px
+}
+
+.title {
+  text-align: left;
+}
+
+.story-btn {
+  display: inline-block;
+  background-color: lightgreen;
+  border: 1px solid black;
+  border-radius: 10px;
+  color: white;
+  font-size: large;
+  padding: 15px 25px;
+}
+
+.story-btn:hover {
+  opacity: .8;
+  cursor: pointer;
+}
+
+.vote {
+  background-color: lightgreen;
+}
+
+.view-in-gh {
+  margin-left: 15px;
+  background-color: black;
+}
+.react-spinner-loader-swing div {
+  border-radius: 50%;
+  float: left;
+  height: 1em;
+  width: 1em;
+}
+.react-spinner-loader-swing div:nth-of-type(1) {
+  background: -webkit-linear-gradient(left, #385c78 0%, #325774 100%);
+  background: linear-gradient(to right, #385c78 0%, #325774 100%);
+}
+.react-spinner-loader-swing div:nth-of-type(2) {
+  background: -webkit-linear-gradient(left, #325774 0%, #47536a 100%);
+  background: linear-gradient(to right, #325774 0%, #47536a 100%);
+}
+.react-spinner-loader-swing div:nth-of-type(3) {
+  background: -webkit-linear-gradient(left, #4a5369 0%, #6b4d59 100%);
+  background: linear-gradient(to right, #4a5369 0%, #6b4d59 100%);
+}
+.react-spinner-loader-swing div:nth-of-type(4) {
+  background: -webkit-linear-gradient(left, #744c55 0%, #954646 100%);
+  background: linear-gradient(to right, #744c55 0%, #954646 100%);
+}
+.react-spinner-loader-swing div:nth-of-type(5) {
+  background: -webkit-linear-gradient(left, #9c4543 0%, #bb4034 100%);
+  background: linear-gradient(to right, #9c4543 0%, #bb4034 100%);
+}
+.react-spinner-loader-swing div:nth-of-type(6) {
+  background: -webkit-linear-gradient(left, #c33f31 0%, #d83b27 100%);
+  background: linear-gradient(to right, #c33f31 0%, #d83b27 100%);
+}
+.react-spinner-loader-swing div:nth-of-type(7) {
+  background: -webkit-linear-gradient(left, #da3b26 0%, #db412c 100%);
+  background: linear-gradient(to right, #da3b26 0%, #db412c 100%);
+}
+.react-spinner-loader-shadow {
+  clear: left;
+  padding-top: 1.5em;
+}
+.react-spinner-loader-shadow div {
+  -webkit-filter: blur(1px);
+  filter: blur(1px);
+  float: left;
+  width: 1em;
+  height: .25em;
+  border-radius: 50%;
+  background: #e3dbd2;
+}
+.react-spinner-loader-shadow .react-spinner-loader-shadow-l {
+  background: #d5d8d6;
+}
+.react-spinner-loader-shadow .react-spinner-loader-shadow-r {
+  background: #eed3ca;
+}
+@-webkit-keyframes ball-l {
+  0%, 50% {
+    -webkit-transform: rotate(0) translateX(0);
+    transform: rotate(0) translateX(0);
+  }
+  100% {
+    -webkit-transform: rotate(50deg) translateX(-2.5em);
+    transform: rotate(50deg) translateX(-2.5em);
+  }
+}
+@keyframes ball-l {
+  0%, 50% {
+    -webkit-transform: rotate(0) translate(0);
+    transform: rotate(0) translateX(0);
+  }
+  100% {
+    -webkit-transform: rotate(50deg) translateX(-2.5em);
+    transform: rotate(50deg) translateX(-2.5em);
+  }
+}
+@-webkit-keyframes ball-r {
+  0% {
+    -webkit-transform: rotate(-50deg) translateX(2.5em);
+    transform: rotate(-50deg) translateX(2.5em);
+  }
+  50%,
+  100% {
+    -webkit-transform: rotate(0) translateX(0);
+    transform: rotate(0) translateX(0);
+  }
+}
+@keyframes ball-r {
+  0% {
+    -webkit-transform: rotate(-50deg) translateX(2.5em);
+    transform: rotate(-50deg) translateX(2.5em);
+  }
+  50%,
+  100% {
+    -webkit-transform: rotate(0) translateX(0);
+    transform: rotate(0) translateX(0)
+  }
+}
+@-webkit-keyframes shadow-l-n {
+  0%, 50% {
+    opacity: .5;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    opacity: .125;
+    -webkit-transform: translateX(-1.57em);
+    transform: translateX(-1.75em);
+  }
+}
+@keyframes shadow-l-n {
+  0%, 50% {
+    opacity: .5;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    opacity: .125;
+    -webkit-transform: translateX(-1.75);
+    transform: translateX(-1.75em);
+  }
+}
+@-webkit-keyframes shadow-r-n {
+  0% {
+    opacity: .125;
+    -webkit-transform: translateX(1.75em);
+    transform: translateX(1.75em);
+  }
+  50%,
+  100% {
+    opacity: .5;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@keyframes shadow-r-n {
+  0% {
+    opacity: .125;
+    -webkit-transform: translateX(1.75em);
+    transform: translateX(1.75em);
+  }
+  50%,
+  100% {
+    opacity: .5;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+.react-spinner-loader-swing-l {
+  -webkit-animation: ball-l .425s ease-in-out infinite alternate;
+  animation: ball-l .425s ease-in-out infinite alternate;
+}
+.react-spinner-loader-swing-r {
+  -webkit-animation: ball-r .425s ease-in-out infinite alternate;
+  animation: ball-r .425s ease-in-out infinite alternate;
+}
+.react-spinner-loader-shadow-l {
+  -webkit-animation: shadow-l-n .425s ease-in-out infinite alternate;
+  animation: shadow-l-n .425s ease-in-out infinite alternate;
+}
+.react-spinner-loader-shadow-r {
+  -webkit-animation: shadow-r-n .425s ease-in-out infinite alternate;
+  animation: shadow-r-n .425s ease-in-out infinite alternate;
+}
+.decision-btns-container {
+  margin: 15px;
+}
+.avatar-wrapper {
+  margin-left: 10px;
+  border-right: 1px solid black;
+  padding-right: 10px;
+}
+.avatar-wrapper:last-of-type {
+  border-right: none !important;
+}
+
+.ava {
+  margin: 15px;
+  border: 3px solid rgba(150,180,150,0.5);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  float: left;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.75) inset;
+  -moz-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.75) inset;
+  -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.75) inset;
+  z-index: 3;
+}
+.ava img {
+  position: relative;
+  display: block;
+  width: 100%;
+  border-radius: 50%;
+  z-index: 2;
+  opacity: .3;
+}
+
+.avatar-container {
+  margin: 0 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.voted {
+  opacity: 1;
+  border-color: greenyellow;
+}
+
+.voted img {
+  opacity: 1;
+}
+
+.hovering {
+  border-color: red;
+  opacity: 1;
+}
+/* Global Variables */
+:root {
+    --app-border: #c4c4c4;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex-center {
+  margin: auto;
+}
+
+.span-link {
+  color: blue;
+}
+.span-link:hover {
+  color: lightblue;
+  cursor: pointer;
+}
+/* Overlay that covers background of app */
+.modal-overlay {
+    width: 80% !important;
+    margin: 30px auto;
+    background-color: white;
+    border: 1px solid black;
+    z-index: 6;
+}
+
+.modal-overlay:focus {
+    outline: none !important;
+}
+
+.modal-body {
+    overflow-y: auto;
+    max-height: 75vh;
+}
+
+.all-info-body {
+    max-height: 75vh;
+}
+
+.close-wrapper {
+  text-align: right !important;
+}
+a.close {
+  color: red;
+  margin: 10px;
+  font-size: 25px;
+  padding: 2px;
+}
+.close:hover {
+  cursor: pointer;
+}
+
+/* Header */
+.modal-header {
+  border-bottom: 1px solid black;
+}
+.modal-header h2{
+  margin-top: 0;
+  font-weight: bold;
+}
+
+/* Footer */
+.modal-footer {
+    border-top: 1px solid black;
+}
+.modal-footer.buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.modal-footer.buttons button {
+    width: 40%;
+}
+
+
+/* Position modal in center of screen height */
+.centered {
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+}
+
+/* Position under nav bar */
+/* .under-nav {
+    margin: 0;
+    position: fixed;
+    top: calc(var(--height-nav-bar) / 2);
+    left: 50%;
+    transform: translateX(-50%);
+} */
+
+/* .smaller {
+    width: 50% !important;
+} */
+
+/* Box on top of overlay */
+.modal-dialog {
+    width: 100% !important;
+    margin: 0 auto !important;
+    position: relative;
+}
+
+.modal-dialog:focus {
+    outline: none !important;
+}
+
+/* Content in box */
+.modal-content {
+    color: black !important;
+}
+
+/* Content inside box */
+/*.modal-content {*/
+    /*height: calc(100vh - 60px);*/
+    /*max-height: calc(100vh - 60px);*/
+    /*min-height: calc(100vh - 60px);;*/
+/*}*/
+
+/* Make modal scrollable */
+/*.modal-confirmation_body {*/
+    /*max-height: calc(100vh - 250px);*/
+/*}*/
+.create-room-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  max-height: 80%;
+  overflow-y: auto;
+}
+
+.create-room-options-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-from-github {
+  margin: auto;
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+}
+.add-from-github input {
+  margin: 10px;
+  width: 80%;
+}
+.add-from-github button {
+  width: 80%;
+  background-color: lightgreen;
+}
+
+.issue-list-wrapper {
+  height: 80%;
+  max-height: 80%;
+}
+.issue-list {
+  height: 80%;
+  max-height: 80%;
+  width: 75%;
+  overflow-y: auto;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+}
+
+.issue-box {
+  border: 1px solid black;
+  text-align: left;
+  padding: 10px;
+  margin: 10px
+}
+
+.title {
+  text-align: left;
+}
+
+.issue-btn {
+  display: inline-block;
+  background-color: lightgreen;
+  border: 1px solid black;
+  border-radius: 10px;
+  color: white;
+  font-size: large;
+  padding: 15px 25px;
+}
+
+.issue-btn:hover {
+  opacity: .8;
+  cursor: pointer;
+}
+
+.add {
+  background-color: lightgreen;
+}
+
+.remove {
+  background-color: lightcoral;
+}
+
+.view-in-gh {
+  margin-left: 15px;
+  background-color: black;
+}
+
+.create-room-btn {
+  padding: 20px;
+  margin: auto;
+  width: 50%;
+  color: white;
+  background-color: green
+}
+
+/*# sourceMappingURL=style.css.map*/
