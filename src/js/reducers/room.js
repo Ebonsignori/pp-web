@@ -7,6 +7,7 @@ import {
   FETCHING_ISSUES,
   ISSUES,
   WS_USERS,
+  WS_STORIES,
   WS_GAME_STATE,
   USER_LOGOUT,
   WS_USER
@@ -82,23 +83,12 @@ export default function roomReducer (state = initialState, action) {
       }
 
       // TODO: Account for failed room fetch
-      // case WS_STORIES:
-      //   return {
-      //     ...state,
-      //     issuesFetched: true,
-      //     issues: action.payload && action.payload.issues
-      //   }
+    case WS_STORIES:
+      return {
+        ...state,
+        stories: action.payload.stories
+      }
 
-    // case WS_VOTE_LABEL:
-    //   return {
-    //     ...state,
-    //     votingLabel: action.payload.label
-    //   }
-    // case UPDATE_VOTE_LABEL:
-    //   return {
-    //     ...state,
-    //     votingLabel: action.label
-    //   }
     // case WS_USERS:
     //   return {
     //     ...state,

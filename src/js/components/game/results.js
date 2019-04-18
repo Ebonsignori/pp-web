@@ -55,7 +55,7 @@ export default class Results extends React.Component {
 
   broadcastDecision (decision) {
     // TODO: Find better way of extracting owner and repo
-    // const { owner, repo } = ownerAndRepoFromUrl(this.props.story.html_url)
+    // const { owner, repo } = ownerAndRepoFromUrl(this.props.story.sourceUrl)
     broadcastDecision(this.props.roomId, this.props.story.githubIssueOwner, this.props.story.githubIssueRepo, this.props.story.githubIssueNumber, decision, this.props.votingLabel)
   }
 

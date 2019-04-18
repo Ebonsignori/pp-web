@@ -2,16 +2,19 @@ import {
   USER_LOGIN,
   USER_LOGOUT,
   FETCHING_MEMBERSHIPS,
-  MEMBERSHIPS_LISTED
+  MEMBERSHIPS_LISTED,
+  FETCHING_ROOM
 } from '../constants/action_types'
 
 const initialState = {
   loggedIn: false,
+  isGuest: false,
+  guestUsername: undefined,
   username: undefined,
   givenName: undefined,
   familyName: undefined,
   email: undefined,
-  avatar: undefined,
+  avatarUrl: undefined,
   membershipsFetched: undefined,
   githubLinked: false,
   userRooms: [],
@@ -23,6 +26,7 @@ const initialState = {
 export default function userReducer (state = initialState, action) {
   switch (action.type) {
     case USER_LOGIN:
+      console.log(action.avatarUrl)
       return {
         ...state,
         loggedIn: true,
@@ -30,8 +34,14 @@ export default function userReducer (state = initialState, action) {
         givenName: action.givenName,
         familyName: action.familyName,
         email: action.email,
-        avatar: action.avatar,
+        avatarUrl: action.avatarUrl,
         githubLinked: action.githubLinked
+      }
+    case FETCHING_ROOM:
+      return {
+        ...state,
+        isGuest: !!action.guestUsername,
+        guestUsername: action.guestUsername
       }
 
     case USER_LOGOUT:

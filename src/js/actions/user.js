@@ -14,7 +14,7 @@ export function loggedIn (profile) {
     givenName: profile.givenName,
     familyName: profile.familyName,
     email: profile.email,
-    avatar: profile.avatar,
+    avatarUrl: profile.avatarUrl,
     githubLinked: profile.githubLinked
   }
 }

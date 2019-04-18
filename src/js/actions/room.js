@@ -5,14 +5,13 @@ import {
   BEGIN_VOTE,
   SHOW_RESULTS,
   RESET,
-  VOTE_LABEL,
-  UPDATE_VOTE_LABEL,
   CREATING_ROOM,
   ISSUES,
-  FETCHING_ISSUES
+  FETCHING_ISSUES,
+  REMOVE_FROM_ROOM
 } from '../constants/action_types'
 
-import { socket } from '../app'
+import { socket, store } from '../app'
 import { jsonPost, jsonGet } from '../utility/fetch'
 
 export function setCreatingRoom (creatingRoom) {
@@ -44,7 +43,8 @@ export function joinRoom (roomId, guestUsername) {
   return dispatch => {
     dispatch({
       type: FETCHING_ROOM,
-      roomId
+      roomId,
+      guestUsername
     })
     socket.emit(JOIN_ROOM, {
       roomId,
@@ -62,7 +62,10 @@ export function beginVoting (roomId, issue) {
 }
 
 export function broadcastVote (roomId, value) {
-  socket.emit(VOTE, { roomId, value })
+  let guestUsername
+  const userStore = store.getState().user
+  if (userStore.isGuest) guestUsername = userStore.guestUsername
+  socket.emit(VOTE, { roomId, value, guestUsername })
 }
 
 export function showResults (roomId) {
@@ -86,4 +89,11 @@ export async function broadcastDecision (roomId, owner, repo, issueNumber, decis
     socket.emit(RESET, { roomId })
   }
   return resp.status
+}
+
+export function removeFromRoom (roomId, username) {
+  socket.emit(REMOVE_FROM_ROOM, {
+    roomId,
+    username
+  })
 }

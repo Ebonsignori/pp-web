@@ -33,7 +33,7 @@ class Choose extends React.Component {
             />
             <button className='story-btn vote' onClick={() => this.selectStory(story)}>Vote!</button>
             {/* TODO: only view in github when github issue */}
-            <button className='story-btn view-in-gh' onClick={() => openInNewTab(story.html_url)}>View in Github</button>
+            <button className='story-btn view-in-gh' onClick={() => openInNewTab(story.sourceUrl)}>View in Github</button>
           </div>
         )
       })

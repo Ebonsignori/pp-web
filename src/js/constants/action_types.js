@@ -5,7 +5,6 @@ export const MEMBERSHIPS_LISTED = 'MEMBERSHIPS_LISTED'
 // Room
 export const CREATING_ROOM = 'CREATING_ROOM'
 export const FETCHING_ROOM = 'FETCHING_ROOM'
-export const UPDATE_VOTE_LABEL = 'UPDATE_VOTE_LABEL'
 
 // =======================
 // Modal Management
@@ -21,14 +20,19 @@ export const OPEN_WITH_CONTENT = 'OPEN_WITH_CONTENT'
 export const WS_CONNECT = 'WS_CONNECT'
 export const WS_DISCONNECT = 'WS_DISCONNECT'
 
+// Websocket error
+export const WS_ERROR = 'WS_ERROR'
+export const SET_ERROR_CONTEXT = 'SET_ERROR_CONTEXT'
+export const CLEAR_ERROR = 'CLEAR_ERROR'
+
 // Websocket subscription status
 export const SUBSCRIBE = 'WS_SUBSCRIBE'
 export const UNSUBSCRIBE = 'WS_UNSUBSCRIBE'
 
 // User
-export const USER_LOGIN = 'user_login'
+export const USER_LOGIN = 'USER_LOGIN'
 export const WS_USER_LOGGED_IN = 'WS_USER_LOGGED_IN'
-export const USER_LOGOUT = 'user_logout'
+export const USER_LOGOUT = 'USER_LOGOUT'
 export const WS_USER_NOT_LOGGED_IN = 'WS_USER_NOT_LOGGED_IN'
 
 // - - - Room - - -
@@ -37,20 +41,20 @@ export const FETCHING_ISSUES = 'FETCHING_ISSUES'
 export const ISSUES = 'ISSUES' // TODO: remove WS issues as now fetching /w REST
 export const WS_STORIES = 'WS_STORIES'
 export const WS_JOINED = 'WS_JOINED'
-export const JOIN_ROOM = 'join_room'
-// Labels
-export const VOTE_LABEL = 'vote_label'
 // Users
 export const WS_USER = 'WS_USER'
 export const WS_USERS = 'WS_USERS'
 // Game State
+export const WS_GAME_STATE = 'WS_GAME_STATE'
+export const WS_VOTE = 'WS_VOTE'
+
+// - - - Websocket actions - - -
+export const JOIN_ROOM = 'join_room'
 export const BEGIN_VOTE = 'begin_vote'
 export const SHOW_RESULTS = 'show_results'
-export const WS_GAME_STATE = 'WS_GAME_STATE'
 export const RESET = 'reset'
-export const WS_VOTE = 'WS_VOTE'
-// Voting
 export const VOTE = 'vote'
+export const REMOVE_FROM_ROOM = 'remove_from_room'
 
 /* Websocket action emit listeners
 *  The key of each WEBSOCKET_ACTION corresponds to the Redux action identifier --- i.e. WS_CONNECT
@@ -60,6 +64,7 @@ export const WEBSOCKET_ACTIONS = {
   // Websocket connection status
   WS_CONNECT: 'connect',
   WS_DISCONNECT: 'disconnect',
+  WS_ERROR: 'error',
 
   // Websocket subscription status
   WS_SUBSCRIBE: 'subscribed',

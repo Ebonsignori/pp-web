@@ -59,7 +59,7 @@ class App extends React.Component {
     let mainContainer = <div className='flex-center'>Login.</div>
     let dash = <h2>Planning Poker (WIP!)</h2>
     let resetBtn = null
-    if (this.props.loggedIn) {
+    if (this.props.loggedIn || this.props.isGuest) {
       if (this.props.roomConnected) {
         mainContainer = <GameController />
         dash = <UserVotes />
@@ -80,17 +80,21 @@ class App extends React.Component {
             {resetBtn}
           </div>
           <div className='login-container'>
-            {this.props.loggedIn ? (
-              <React.Fragment>
-                Hello {this.props.username}
-                <img src={this.props.avatar} className='avatar-logo' />
-                <button
-                  style={{ marginLeft: '15px' }}
-                  onClick={this.logout}>Logout</button>
-                <button onClick={this.openAccountModal}>View Account</button>
+            {this.props.isGuest
+              ? <React.Fragment>
+              Hello Guest, {this.props.guestUsername}
               </React.Fragment>
-            )
-              : <button onClick={this.openAccountModal}>Login</button>}
+              : this.props.loggedIn ? (
+                <React.Fragment>
+                Hello {this.props.username}
+                  <img src={this.props.avatarUrl} className='avatar-logo' />
+                  <button
+                    style={{ marginLeft: '15px' }}
+                    onClick={this.logout}>Logout</button>
+                  <button onClick={this.openAccountModal}>View Account</button>
+                </React.Fragment>
+              )
+                : <button onClick={this.openAccountModal}>Login</button>}
           </div>
           <div className='chat-container' />
           <div className='main-container'>
@@ -112,8 +116,10 @@ const mapStateToProps = (state) => {
     creatingRoom: state.room.creatingRoom,
     loggedIn: state.user.loggedIn,
     roomConnected: state.room.roomConnected,
+    isGuest: state.user.isGuest,
+    guestUsername: state.user.guestUsername,
     username: state.user.username,
-    avatar: state.user.avatar,
+    avatarUrl: state.user.avatarUrl,
     roomId: state.room.roomId
   }
 }

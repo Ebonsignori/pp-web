@@ -142,7 +142,7 @@ const mapStateToProps = (state) => {
   return {
     loggedIn: state.user.loggedIn,
     username: state.user.username,
-    avatar: state.user.avatar,
+    avatarUrl: state.user.avatarUrl,
     githubLinked: state.user.githubLinked,
     isOpen: state.modal[ACCOUNT]
 

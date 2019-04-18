@@ -7,10 +7,12 @@ import connect from 'react-redux/es/connect/connect'
 import { closeModal } from '../../actions/modals'
 import { JOIN_ROOM } from '../../constants/modals'
 import { joinRoom } from '../../actions/room'
+import { errorContexts, setErrorContext, clearError } from '../../actions/errors'
 
 import './join-room-modal.css'
 import { logout } from '../../actions/user'
 import Login from '../user/account/Login'
+import errors from '../../constants/socket-errors'
 
 class JoinRoomModal extends React.Component {
   constructor (props) {
@@ -34,7 +36,9 @@ class JoinRoomModal extends React.Component {
 
   joinRoom (asGuest) {
     if (asGuest) {
+      this.props.dispatch(clearError)
       if (!this.state.guestUsername) return this.setState({ invalidGuestUsername: true })
+      this.props.dispatch(setErrorContext(errorContexts.GUEST_USERNAME))
       this.props.dispatch(joinRoom(this.props.roomId, this.state.guestUsername))
     } else {
       this.props.dispatch(joinRoom(this.props.roomId))
@@ -69,7 +73,18 @@ class JoinRoomModal extends React.Component {
         Guest Username: <input value={this.state.guestUsername} onChange={(event) => {
             this.setState({ guestUsername: event.target.value })
           }} />
-          {this.state.invalidGuestUsername && <p>Please enter a valid guest username.</p>}
+          {this.state.invalidGuestUsername &&
+          <div>
+            <p>Please enter a valid guest username.</p>
+            <button onClick={() => this.setState({ invalidGuestUsername: false })}>Ok</button>
+          </div>
+          }
+          {this.props.errorType === errors.ALREADY_EXISTS &&
+          <div>
+            <p>That username is already taken.</p>
+            <button onClick={() => this.props.dispatch(clearError)}>Ok</button>
+          </div>
+          }
           <br />
           <button onClick={() => this.joinRoom(true)}>Join as Guest</button>
         </React.Fragment>
@@ -106,7 +121,9 @@ const mapStateToProps = (state) => {
     loggedIn: state.user.loggedIn,
     roomId: state.room.roomId,
     username: state.user.username,
-    isOpen: state.modal[JOIN_ROOM]
+    isOpen: state.modal[JOIN_ROOM],
+    errorContext: state.socket.errorContext,
+    errorType: state.socket.errorType
   }
 }
 

@@ -78,6 +78,7 @@ class CreateRoom extends React.Component {
       if (Array.isArray(this.props.issues) && this.props.issues.length > 0) {
         // TODO: Make issues list reusable
         githubIssues = this.props.issues.map((issue) => {
+          console.log(issue)
           return (
             <div className='issue-box' key={`issue:${issue.title}`}>
               <h2 className='title'>{issue.title}</h2>
@@ -101,6 +102,8 @@ class CreateRoom extends React.Component {
                     body: issue.body,
                     sourceUrl: issue.html_url,
                     isFromGithub: true,
+                    githubIssueId: issue.id,
+                    githubIssueLabel: this.state.issueLabel,
                     githubIssueOwner: this.state.repoOwner,
                     githubIssueRepo: this.state.repoName,
                     githubIssueNumber: issue.number
@@ -110,7 +113,7 @@ class CreateRoom extends React.Component {
                   })
                 }}>Add to room</button>
               }
-              <button className='issue-btn view-in-gh' onClick={() => openInNewTab(issue.html_url)}>View in Github</button>
+              <button className='issue-btn view-in-gh' onClick={() => openInNewTab(issue.sourceUrl)}>View in Github</button>
             </div>
           )
         })
@@ -222,7 +225,7 @@ const mapStateToProps = (state) => {
     issues: state.room.issues,
     loggedIn: state.user.loggedIn,
     username: state.user.username,
-    avatar: state.user.avatar,
+    avatarUrl: state.user.avatarUrl,
     githubLinked: state.user.githubLinked
   }
 }

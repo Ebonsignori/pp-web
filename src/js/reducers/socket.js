@@ -1,10 +1,15 @@
 import {
   WS_CONNECT,
-  WS_DISCONNECT
+  WS_DISCONNECT,
+  SET_ERROR_CONTEXT,
+  WS_ERROR,
+  CLEAR_ERROR
 } from '../constants/action_types'
 
 const initialState = {
-  status: 'disconnected'
+  status: 'disconnected',
+  errorType: undefined,
+  errorContext: undefined
 }
 
 export default function websocketReducer (state = initialState, action) {
@@ -18,6 +23,22 @@ export default function websocketReducer (state = initialState, action) {
       return {
         ...state,
         status: 'disconnected'
+      }
+    case SET_ERROR_CONTEXT:
+      return {
+        ...state,
+        errorContext: action.errorContext
+      }
+    case WS_ERROR:
+      return {
+        ...state,
+        errorType: action.payload.errorType
+      }
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        errorContext: undefined,
+        errorType: undefined
       }
     default:
       return state

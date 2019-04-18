@@ -20,12 +20,12 @@ export function initSocket (store) {
   // Add an event listener for every websocket action. Each listener fires a redux store dispatch with payload contents
   Object.keys(websocketActions).forEach(type =>
     socket.on(WEBSOCKET_ACTIONS[type], payload => {
-      if (type === WS_USER_NOT_LOGGED_IN) {
-        console.log('Not logged in from websocket')
-        store.dispatch(notLoggedIn())
-      } else {
-        store.dispatch({ type: type, date: new Date(), payload, socket })
-      }
+      // if (type === WS_USER_NOT_LOGGED_IN) {
+      // console.log('Not logged in from websocket')
+      // store.dispatch(notLoggedIn())
+      // } else {
+      store.dispatch({ type: type, date: new Date(), payload, socket })
+      // }
     }
     )
   )
