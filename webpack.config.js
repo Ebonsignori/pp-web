@@ -52,10 +52,10 @@ async function webpackConfig () {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         'process.env.API_URL': process.env.NODE_ENV === 'production'
-          ? JSON.stringify(await getDevUrl(true))
+          ? JSON.stringify('https://planning-poker.salesvista.app')
           : JSON.stringify(await getDevUrl()),
         'process.env.WEB_URL': process.env.NODE_ENV === 'production'
-          ? JSON.stringify('https://ebonsignori.github.io/planning-poker')
+          ? JSON.stringify('https://salesvista.github.io/pp-web')
           : JSON.stringify('http://localhost:8086')
       })
     ],

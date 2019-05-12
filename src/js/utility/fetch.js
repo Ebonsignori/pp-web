@@ -13,8 +13,9 @@ export async function jsonPost (uri, sendingObj, options = {}) {
     credentials: 'include'
   })
 
+  // Get JSON for 2xx responses
   let json = {}
-  if (response.status === 200) json = await response.json()
+  if (String(response.status)[0] === '2') json = await response.json()
   return {
     status: response.status,
     ...json

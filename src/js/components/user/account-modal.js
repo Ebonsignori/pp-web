@@ -54,7 +54,8 @@ class AccountModal extends React.Component {
 
   // Open oauth in separate window
   openPopup () {
-    const width = 600; const height = 600
+    const width = 600
+    const height = 600
     const left = (window.innerWidth / 2) - (width / 2)
     const top = (window.innerHeight / 2) - (height / 2)
     const url = `${API_URL}${GITHUB_OAUTH_URL}?socketId=${socket.id}`
@@ -88,22 +89,28 @@ class AccountModal extends React.Component {
     let body
     if (this.props.loggedIn) {
       body = <React.Fragment>
-        <h3> Hello {this.props.username}</h3>
+        <h3>Hello {this.props.username}</h3>
         {this.props.githubLinked ? 'Your github account is linked.'
           : <button className='github-button' onClick={this.startAuth}>
             <img className='github-image' src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png' />
-            <p>Link your GitHub</p>
+            <p>
+              Link your GitHub
+            </p>
           </button>}
       </React.Fragment>
     } else if (this.state.isRegistering) {
       body = <React.Fragment>
         <Register dispatch={this.props.dispatch} setRegistering={this.setRegistering} />
-        <button onClick={() => this.setRegistering(false)}>Go to Login</button>
+        <button onClick={() => this.setRegistering(false)}>
+          Go to Login
+        </button>
       </React.Fragment>
     } else {
       body = <React.Fragment>
         <Login dispatch={this.props.dispatch} />
-        <button onClick={() => this.setRegistering(true)}>Go to Register</button>
+        <button onClick={() => this.setRegistering(true)}>
+          Go to Register
+        </button>
       </React.Fragment>
     }
 
@@ -113,23 +120,22 @@ class AccountModal extends React.Component {
         onAfterOpen={this.afterOpenModal}
         onRequestClose={this.closeModal}
         contentLabel={`${ACCOUNT} modal`}
-        className='modal-overlay'
-      >
+        className='modal-overlay'>
         <div className='modal-dialog' tabIndex='-1'>
           <div className='modal-content'>
             <div className='modal-header text-center'>
               <div className='close-wrapper'>
-                <a onClick={this.closeModal} className='close' data-dismiss='modal'>&times;</a>
+                <a onClick={this.closeModal} className='close' data-dismiss='modal'>×</a>
               </div>
               <h2>{this.props.loggedIn ? 'Account' : 'Login or Register'}</h2>
             </div>
-            <div className='modal-body text-center'>
+            <div style={{ padding: '25px 0' }} className='modal-body text-center'>
               {body}
               {/* <p>If you haven't already, make sure to install the Planning Poker in the Orgs/Repo that you plan to use it in.</p>
-              <button className='github-button' onClick={() => window.open(GH_APP_INSTALL_URL)}>
-                <img className='github-image' src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png' />
-                <p>Install Planning Poker</p>
-              </button> */}
+                                                                      <button className='github-button' onClick={() => window.open(GH_APP_INSTALL_URL)}>
+                                                                        <img className='github-image' src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png' />
+                                                                        <p>Install Planning Poker</p>
+                                                                      </button> */}
             </div>
           </div>
         </div>

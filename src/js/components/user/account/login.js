@@ -26,6 +26,7 @@ export default class Login extends React.Component {
       })
 
       if (response.status === 200) {
+        if (this.props.refresh) window.location.reload()
         this.props.dispatch(loggedIn(response))
       } else {
         // Corresponds to HTTP status 404 for account not found 403 for bad password
@@ -40,12 +41,16 @@ export default class Login extends React.Component {
     return (
       <div className='login-user-not-logged-in'>
         <form onSubmit={this.login} className='login-form'>
-          <label>Username </label>
-          <input type='text' value={this.state.username}
-            onChange={(event) => this.setState({ username: event.target.value })} />
-          <label>Password </label>
-          <input type='password' value={this.state.password}
-            onChange={(event) => this.setState({ password: event.target.value })} />
+          <div>
+            <label>Username </label>
+            <input type='text' value={this.state.username}
+              onChange={(event) => this.setState({ username: event.target.value })} />
+          </div>
+          <div>
+            <label>Password </label>
+            <input type='password' value={this.state.password}
+              onChange={(event) => this.setState({ password: event.target.value })} />
+          </div>
           <br />
           <button type='submit'>Login</button>
         </form>

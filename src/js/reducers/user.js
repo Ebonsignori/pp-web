@@ -9,7 +9,6 @@ import {
 const initialState = {
   loggedIn: false,
   isGuest: false,
-  guestUsername: undefined,
   username: undefined,
   givenName: undefined,
   familyName: undefined,
@@ -26,11 +25,11 @@ const initialState = {
 export default function userReducer (state = initialState, action) {
   switch (action.type) {
     case USER_LOGIN:
-      console.log(action.avatarUrl)
       return {
         ...state,
         loggedIn: true,
         username: action.username,
+        isGuest: action.isGuest,
         givenName: action.givenName,
         familyName: action.familyName,
         email: action.email,
@@ -39,9 +38,7 @@ export default function userReducer (state = initialState, action) {
       }
     case FETCHING_ROOM:
       return {
-        ...state,
-        isGuest: !!action.guestUsername,
-        guestUsername: action.guestUsername
+        ...state
       }
 
     case USER_LOGOUT:

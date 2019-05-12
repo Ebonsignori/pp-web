@@ -10,7 +10,7 @@ import { joinRoom } from '../../actions/room'
 import { errorContexts, setErrorContext, clearError } from '../../actions/errors'
 
 import './join-room-modal.css'
-import { logout } from '../../actions/user'
+import { logout, registerGuest } from '../../actions/user'
 import Login from '../user/account/Login'
 import errors from '../../constants/socket-errors'
 
@@ -39,7 +39,10 @@ class JoinRoomModal extends React.Component {
       this.props.dispatch(clearError)
       if (!this.state.guestUsername) return this.setState({ invalidGuestUsername: true })
       this.props.dispatch(setErrorContext(errorContexts.GUEST_USERNAME))
-      this.props.dispatch(joinRoom(this.props.roomId, this.state.guestUsername))
+      registerGuest(this.state.guestUsername).then(() => {
+        // TODO: Wait for socket to connect?
+        this.props.dispatch(joinRoom(this.props.roomId))
+      })
     } else {
       this.props.dispatch(joinRoom(this.props.roomId))
     }
@@ -54,7 +57,7 @@ class JoinRoomModal extends React.Component {
     if (!this.props.loggedIn) {
       if (this.state.loggingIn) {
         body = <React.Fragment>
-          <Login dispatch={this.props.dispatch} />
+          <Login refresh dispatch={this.props.dispatch} />
           <br />
           <button onClick={() => {
             this.setState({

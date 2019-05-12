@@ -10,8 +10,8 @@ import { getParameterByName } from './utility/utility'
 import { openModal } from './actions/modals'
 import { JOIN_ROOM } from './constants/modals'
 
+// TODO: Is this the best place to expose these?
 const { socket, store } = initStore()
-socket.connect()
 export { socket, store }
 
 // TODO: Move this

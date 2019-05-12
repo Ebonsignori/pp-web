@@ -56,8 +56,8 @@ class App extends React.Component {
   }
 
   render () {
-    let mainContainer = <div className='flex-center'>Login.</div>
-    let dash = <h2>Planning Poker (WIP!)</h2>
+    let mainContainer = <div className='flex-center'>Please login or register to create a room.</div>
+    let dash = <h2>Planning Poker</h2>
     let resetBtn = null
     if (this.props.loggedIn || this.props.isGuest) {
       if (this.props.roomConnected) {
@@ -67,7 +67,14 @@ class App extends React.Component {
       } else if (this.props.creatingRoom) {
         mainContainer = <CreateRoom />
       } else {
-        mainContainer = <UserRooms />
+        if (this.props.isGuest) {
+          mainContainer = <React.Fragment>
+            <div className='flex-center'><h2>You are a guest user</h2></div>
+            <div className='flex-center'>To create your own room, logout and register an account.</div>
+          </React.Fragment>
+        } else {
+          mainContainer = <UserRooms />
+        }
       }
       // dash = <button onClick={this.listMemberships}>Refresh Repos</button>
     }
@@ -82,7 +89,10 @@ class App extends React.Component {
           <div className='login-container'>
             {this.props.isGuest
               ? <React.Fragment>
-              Hello Guest, {this.props.guestUsername}
+              Hello Guest, {this.props.username}
+                <button
+                  style={{ marginLeft: '15px' }}
+                  onClick={this.logout}>Logout</button>
               </React.Fragment>
               : this.props.loggedIn ? (
                 <React.Fragment>

@@ -5,11 +5,15 @@ import MarkdownGitHub from 'react-markdown-github'
 import { broadcastDecision } from '../../actions/room'
 import { openInNewTab } from '../../utility/utility'
 
-// import './results.css'
+import './results.css'
 
 export default class Results extends React.Component {
   constructor (props) {
     super(props)
+
+    this.state = {
+      manualSwag: ''
+    }
 
     this.broadcastDecision = this.broadcastDecision.bind(this)
     this.determineVoteResults = this.determineVoteResults.bind(this)
@@ -72,6 +76,23 @@ export default class Results extends React.Component {
         </div>
         <div className='decision-btns-container'>
           {decisionButtons && decisionButtons}
+        </div>
+        <div>
+          <input onChange={(event) => {
+            const newVal = event.target.value
+            if (Number.isInteger(Number(newVal))) {
+              this.setState({
+                manualSwag: event.target.value
+              })
+            }
+          }} value={this.state.manualSwag} />
+          <button onClick={() => {
+            if (this.state.manualSwag && Number.isInteger(Number(this.state.manualSwag))) {
+              console.log('Broadcasting!')
+              console.log(this.state.manualSwag)
+              this.broadcastDecision(this.state.manualSwag)
+            }
+          }}>Apply swag:{this.state.manualSwag}</button>
         </div>
         <hr />
         <h2>Deciding on</h2>

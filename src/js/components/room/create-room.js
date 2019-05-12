@@ -12,6 +12,7 @@ import './create-room.css'
 import 'react-toggle/style.css' // for ES6 modules
 import { fetchGithubIssues, setCreatingRoom } from '../../actions/room'
 import { jsonPost } from '../../utility/fetch'
+import { GH_APP_INSTALL_URL } from '../../config/config'
 
 class CreateRoom extends React.Component {
   constructor (props) {
@@ -78,7 +79,6 @@ class CreateRoom extends React.Component {
       if (Array.isArray(this.props.issues) && this.props.issues.length > 0) {
         // TODO: Make issues list reusable
         githubIssues = this.props.issues.map((issue) => {
-          console.log(issue)
           return (
             <div className='issue-box' key={`issue:${issue.title}`}>
               <h2 className='title'>{issue.title}</h2>
@@ -211,6 +211,9 @@ class CreateRoom extends React.Component {
         </div>
         <h2>Stories</h2>
         <p>TODO: Manual stories here</p>
+        {this.props.issuesFetched && <p>Don't see any issues? <span
+          className='span-link'
+          onClick={() => window.open(GH_APP_INSTALL_URL)}>Install the Planning Poker App</span> for your repo.</p>}
         {issueDisplay}
         <br />
         <button className='create-room-btn' onClick={this.createRoom}>Create Room</button>
