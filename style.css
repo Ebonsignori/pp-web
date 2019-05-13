@@ -322,7 +322,7 @@
 .stories-list {
   max-height: 80%;
   width: 75%;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   margin: 20px;
   display: flex;
   flex-direction: column;
@@ -578,6 +578,9 @@
 .hovering {
   border-color: red;
   opacity: 1;
+}
+.ReactModal__Overlay {
+  z-index: 3 !important;
 }
 /* Global Variables */
 :root {
