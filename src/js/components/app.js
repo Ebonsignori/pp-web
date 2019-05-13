@@ -13,6 +13,7 @@ import GameController from './game/game-controller'
 import UserVotes from './game/user-votes'
 import UserRooms from './user/user-rooms'
 import JoinRoomModal from './room/join-room-modal'
+import { NotificationModal, ConfirmationModal } from './common/modals'
 
 import './app.css'
 import '../config/css/global.css'
@@ -21,6 +22,8 @@ import '../config/css/modal.css'
 import Modal from 'react-modal'
 import { jsonGet } from '../utility/fetch'
 import CreateRoom from './room/create-room'
+import { STAGES } from '../constants/game'
+
 Modal.setAppElement('body')
 
 class App extends React.Component {
@@ -63,7 +66,10 @@ class App extends React.Component {
       if (this.props.roomConnected) {
         mainContainer = <GameController />
         dash = <UserVotes />
-        resetBtn = <button onClick={() => resetGame(this.props.roomId)}>Go back to stories</button>
+        console.log(this.props.gameState)
+        if (this.props.gameState.stage !== STAGES.CHOOSE) {
+          resetBtn = <button onClick={() => resetGame(this.props.roomId)}>Go back to stories</button>
+        }
       } else if (this.props.creatingRoom) {
         mainContainer = <CreateRoom />
       } else {
@@ -115,6 +121,8 @@ class App extends React.Component {
         {/* Modals */}
         <AccountModal />
         <JoinRoomModal />
+        <NotificationModal />
+        <ConfirmationModal />
 
       </React.Fragment>
     )
@@ -130,7 +138,8 @@ const mapStateToProps = (state) => {
     guestUsername: state.user.guestUsername,
     username: state.user.username,
     avatarUrl: state.user.avatarUrl,
-    roomId: state.room.roomId
+    roomId: state.room.roomId,
+    gameState: state.room.gameState
   }
 }
 

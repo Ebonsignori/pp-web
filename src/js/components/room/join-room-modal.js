@@ -37,7 +37,7 @@ class JoinRoomModal extends React.Component {
   joinRoom (asGuest) {
     if (asGuest) {
       this.props.dispatch(clearError)
-      if (!this.state.guestUsername) return this.setState({ invalidGuestUsername: true })
+      if (!this.state.guestUsername || this.state.guestUsername.includes('_')) return this.setState({ invalidGuestUsername: true })
       this.props.dispatch(setErrorContext(errorContexts.GUEST_USERNAME))
       registerGuest(this.state.guestUsername).then(() => {
         // TODO: Wait for socket to connect?
@@ -78,7 +78,7 @@ class JoinRoomModal extends React.Component {
           }} />
           {this.state.invalidGuestUsername &&
           <div>
-            <p>Please enter a valid guest username.</p>
+            <p>Please enter a valid guest username without underscores.</p>
             <button onClick={() => this.setState({ invalidGuestUsername: false })}>Ok</button>
           </div>
           }

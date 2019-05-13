@@ -6,6 +6,7 @@ import { broadcastDecision } from '../../actions/room'
 import { openInNewTab } from '../../utility/utility'
 
 import './results.css'
+import { toGuestUsername } from '../../utility/strings';
 
 export default class Results extends React.Component {
   constructor (props) {
@@ -22,24 +23,21 @@ export default class Results extends React.Component {
 
   determineVoteResults () {
     const tally = {}
-    let user = {}
     const voteResults = Object.entries(this.props.userVotes).map(entry => {
-      user = this.props.users.find(u => u.username === entry[0])
-      const choiceKey = String(entry[1])
-      if (!tally[choiceKey]) tally[choiceKey] = 0
-      tally[choiceKey] = Number(tally[choiceKey]) + 1
-      // if (user && Array.isArray(user.photos) && user.photos.length > 0) {
+      const choiceValue = String(entry[1])
+      // Tally each choice
+      if (!tally[choiceValue]) tally[choiceValue] = 0
+      tally[choiceValue] = Number(tally[choiceValue]) + 1
+      
+      // Display what each user voted for
+      let username = entry[0]
+      if (username.includes('_')) username = toGuestUsername(username)
       return (
-        <div className='voter-wrapper' key={`voter: ${user && user.username}`}>
-          {/* <div
-              className={`ava${this.props.userVotes[user.username] === 'voted' ? ' voted' : ''}`}>
-              <img src={user.photos[0] && user.photos[0].value} />
-            </div> */}
-          <span>{user && user.username} chose: {entry[1]}</span>
+        <div className='voter-wrapper' style={{marginBottom: '5px'}} key={`voter: ${entry[0]}`}>
+          <span>{username} chose: {entry[1]}</span>
         </div>
 
       )
-      // }
     })
 
     return { voteResults, tally }
@@ -49,9 +47,9 @@ export default class Results extends React.Component {
     const sortedTallies = Object.entries(tally).sort((e1, e2) => e1[0] - e2[0])
     return sortedTallies.map(entry => {
       return (
-        <div className='decision-wrapper' key={`decision: ${entry[0]}`}>
+        <div className='decision-wrapper' style={{ marginBottom: '5px' }} key={`decision: ${entry[0]}`}>
           <button onClick={() => this.broadcastDecision(entry[0])}>Apply swag:{entry[0]} to Github Issue</button>
-          <span>({entry[1]} votes) </span>
+          <span style={{ marginLeft: '5px' }}>({entry[1]} {Number(entry[1]) > 1 ? 'votes' : 'vote'}) </span>
         </div>
       )
     })
@@ -60,10 +58,11 @@ export default class Results extends React.Component {
   broadcastDecision (decision) {
     // TODO: Find better way of extracting owner and repo
     // const { owner, repo } = ownerAndRepoFromUrl(this.props.story.sourceUrl)
-    broadcastDecision(this.props.roomId, this.props.story.githubIssueOwner, this.props.story.githubIssueRepo, this.props.story.githubIssueNumber, decision, this.props.votingLabel)
+    broadcastDecision(this.props.roomId, this.props.story.githubIssueOwner, this.props.story.githubIssueRepo, this.props.story.githubIssueNumber, decision, this.props.votingLabel, this.props.story.id)
   }
 
   render () {
+    console.log(this.props.story)
     const { voteResults, tally } = this.determineVoteResults()
     const decisionButtons = this.renderDecisionBtns(tally)
 
@@ -86,10 +85,8 @@ export default class Results extends React.Component {
               })
             }
           }} value={this.state.manualSwag} />
-          <button onClick={() => {
+          <button style={{ marginLeft: '5px' }} onClick={() => {
             if (this.state.manualSwag && Number.isInteger(Number(this.state.manualSwag))) {
-              console.log('Broadcasting!')
-              console.log(this.state.manualSwag)
               this.broadcastDecision(this.state.manualSwag)
             }
           }}>Apply swag:{this.state.manualSwag}</button>

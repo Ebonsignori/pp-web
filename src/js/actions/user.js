@@ -1,6 +1,7 @@
 import { store, socket } from '../app'
 import { USER_LOGOUT, USER_LOGIN } from '../constants/action_types'
 import { jsonGet, jsonPost } from '../utility/fetch'
+import { toGuestUsername } from '../utility/strings'
 import { openModal } from './modals'
 import { ACCOUNT } from '../constants/modals'
 import { upsertProperty, readProperty } from '../utility/localStorage'
@@ -12,7 +13,7 @@ export const userNotLoggedIn = {
 export function loggedIn (profile) {
   if (profile.isGuest) {
     if (readProperty('guestUsername') === profile.username) {
-      profile.username = profile.username.substr(0, profile.username.indexOf('_'))
+      profile.username = toGuestUsername(profile.username)
     }
   }
   return {

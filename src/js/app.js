@@ -5,7 +5,6 @@ import { Provider } from 'react-redux'
 import App from './components/app'
 import { initStore } from './store'
 
-// TODO: move this
 import { getParameterByName } from './utility/utility'
 import { openModal } from './actions/modals'
 import { JOIN_ROOM } from './constants/modals'

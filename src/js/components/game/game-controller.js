@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Choose from './choose'
 import Vote from './vote'
 import Results from './results'
-
+import { STAGES } from '../../constants/game'
 class GameController extends React.Component {
   render () {
     return (
@@ -15,16 +15,9 @@ class GameController extends React.Component {
   }
 }
 
-// TODO: move to config
-const STAGES = {
-  CHOSE: 'choose',
-  VOTE: 'vote',
-  RESULTS: 'results'
-}
-
 function renderCurrentStage (roomId, { stage, story, userVotes }, userVote, users, votingLabel) {
   switch (stage) {
-    case STAGES.CHOSE:
+    case STAGES.CHOOSE:
       return <Choose />
     case STAGES.VOTE:
       return <Vote

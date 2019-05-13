@@ -1,17 +1,12 @@
-import { CLOSE_MODAL, OPEN_MODAL, OPEN_WITH_CONTENT } from '../constants/action_types'
+import { CLOSE_MODAL, OPEN_MODAL } from '../constants/action_types'
 
 // Opens (displays) a react-modal on dispatch
-export function openModal (modalToOpen, openWithContentObj) {
+export function openModal (modalToOpen, content) {
   return dispatch => {
-    if (openWithContentObj) {
-      dispatch({
-        type: OPEN_WITH_CONTENT,
-        ...openWithContentObj
-      })
-    }
     dispatch({
       type: OPEN_MODAL,
-      modalToOpen
+      modalToOpen,
+      content
     })
   }
 }

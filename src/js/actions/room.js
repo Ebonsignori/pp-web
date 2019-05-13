@@ -8,7 +8,8 @@ import {
   CREATING_ROOM,
   ISSUES,
   FETCHING_ISSUES,
-  REMOVE_FROM_ROOM
+  REMOVE_USER,
+  DECIDE_VOTE
 } from '../constants/action_types'
 
 import { socket } from '../app'
@@ -52,10 +53,10 @@ export function joinRoom (roomId) {
 }
 
 // TODO: Here and other places, find better pattern than always passing roomId
-export function beginVoting (roomId, issue) {
+export function beginVoting (roomId, story) {
   socket.emit(BEGIN_VOTE, {
     roomId,
-    issue
+    story
   })
 }
 
@@ -72,7 +73,8 @@ export function resetGame (roomId) {
 }
 
 // TODO: Move elsewhere with coming label functions?
-export async function broadcastDecision (roomId, owner, repo, issueNumber, decision, votingLabel) {
+export async function broadcastDecision (roomId, owner, repo, issueNumber, decision, votingLabel, storyId) {
+  // When votingLabel is present in request, endpoint attempts to remove existing votingLabel from issue
   votingLabel = 'swag:ready' // TODO: get/set programatically
   // TODO: Replace string with custom label
   const body = {
@@ -81,13 +83,17 @@ export async function broadcastDecision (roomId, owner, repo, issueNumber, decis
   }
   const resp = await jsonPost(`/issues/${owner}/${repo}/${issueNumber}`, body)
   if (resp.status === 200) {
-    socket.emit(RESET, { roomId })
+    socket.emit(DECIDE_VOTE, {
+      roomId,
+      storyId,
+      decision
+    })
   }
   return resp.status
 }
 
 export function removeFromRoom (roomId, username) {
-  socket.emit(REMOVE_FROM_ROOM, {
+  socket.emit(REMOVE_USER, {
     roomId,
     username
   })

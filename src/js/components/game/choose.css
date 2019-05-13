@@ -1,7 +1,7 @@
 .stories-list {
   max-height: 80%;
   width: 75%;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   margin: 20px;
   display: flex;
   flex-direction: column;

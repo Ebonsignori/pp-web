@@ -2,8 +2,7 @@ import {
   USER_LOGIN,
   USER_LOGOUT,
   FETCHING_MEMBERSHIPS,
-  MEMBERSHIPS_LISTED,
-  FETCHING_ROOM
+  MEMBERSHIPS_LISTED
 } from '../constants/action_types'
 
 const initialState = {
@@ -36,10 +35,6 @@ export default function userReducer (state = initialState, action) {
         avatarUrl: action.avatarUrl,
         githubLinked: action.githubLinked
       }
-    case FETCHING_ROOM:
-      return {
-        ...state
-      }
 
     case USER_LOGOUT:
       return { ...initialState }
@@ -49,6 +44,7 @@ export default function userReducer (state = initialState, action) {
         ...state,
         membershipsFetched: false
       }
+
     case MEMBERSHIPS_LISTED:
       return {
         ...state,

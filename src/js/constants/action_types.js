@@ -11,14 +11,13 @@ export const FETCHING_ROOM = 'FETCHING_ROOM'
 // =======================
 export const OPEN_MODAL = 'OPEN_MODAL'
 export const CLOSE_MODAL = 'CLOSE_MODAL'
-export const OPEN_WITH_CONTENT = 'OPEN_WITH_CONTENT'
 
 // =======================
 // Websocket
 // =======================
 // Websocket connection status
-export const WS_CONNECT = 'WS_CONNECT'
-export const WS_DISCONNECT = 'WS_DISCONNECT'
+// export const WS_CONNECT = 'WS_CONNECT'
+// export const WS_DISCONNECT = 'WS_DISCONNECT'
 
 // Websocket error
 export const WS_ERROR = 'WS_ERROR'
@@ -40,6 +39,7 @@ export const WS_USER_NOT_LOGGED_IN = 'WS_USER_NOT_LOGGED_IN'
 export const FETCHING_ISSUES = 'FETCHING_ISSUES'
 export const ISSUES = 'ISSUES' // TODO: remove WS issues as now fetching /w REST
 export const WS_STORIES = 'WS_STORIES'
+export const WS_STORY = 'WS_STORY'
 export const WS_JOINED = 'WS_JOINED'
 // Users
 export const WS_USER = 'WS_USER'
@@ -54,7 +54,9 @@ export const BEGIN_VOTE = 'begin_vote'
 export const SHOW_RESULTS = 'show_results'
 export const RESET = 'reset'
 export const VOTE = 'vote'
-export const REMOVE_FROM_ROOM = 'remove_from_room'
+export const WS_REMOVE_USER = 'WS_REMOVE_USER'
+export const REMOVE_USER = 'remove_user'
+export const DECIDE_VOTE = 'decide_vote'
 
 /* Websocket action emit listeners
 *  The key of each WEBSOCKET_ACTION corresponds to the Redux action identifier --- i.e. WS_CONNECT
@@ -62,8 +64,8 @@ export const REMOVE_FROM_ROOM = 'remove_from_room'
  */
 export const WEBSOCKET_ACTIONS = {
   // Websocket connection status
-  WS_CONNECT: 'connect',
-  WS_DISCONNECT: 'disconnect',
+  // WS_CONNECT: 'connect',
+  // WS_DISCONNECT: 'disconnect',
   WS_ERROR: 'error',
 
   // Websocket subscription status
@@ -77,6 +79,7 @@ export const WEBSOCKET_ACTIONS = {
   // User
   WS_USER_LOGGED_IN: 'user_logged_in',
   WS_USER_NOT_LOGGED_IN: 'user_not_logged_in',
+  WS_REMOVE_USER: 'remove_user',
 
   // Room users
   WS_USER: 'user',
@@ -87,6 +90,7 @@ export const WEBSOCKET_ACTIONS = {
   WS_VOTE: 'vote',
 
   // Stories
-  WS_STORIES: 'stories'
+  WS_STORIES: 'stories',
+  WS_STORY: 'story'
 
 }

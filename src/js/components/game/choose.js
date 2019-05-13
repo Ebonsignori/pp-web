@@ -21,23 +21,48 @@ class Choose extends React.Component {
   }
 
   render () {
-    let storiesList
+    let unvotedStories
     if (Array.isArray(this.props.stories) && this.props.stories.length > 0) {
-      storiesList = this.props.stories.map((story) => {
-        return (
-          <div className='story-box' key={`story:${story.title}`}>
-            <h2 className='title'>{story.title}</h2>
-            <hr />
-            <MarkdownGitHub
-              source={story.body}
-            />
-            <button className='story-btn vote' onClick={() => this.selectStory(story)}>Vote!</button>
-            {/* TODO: only view in github when github issue */}
-            <button className='story-btn view-in-gh' onClick={() => openInNewTab(story.sourceUrl)}>View in Github</button>
-          </div>
-        )
+      unvotedStories = this.props.stories.map((story) => {
+        if (!story.voteValue) {
+          return (
+            <div className='story-box' key={`story:${story.title}`}>
+              <h2 className='title'>{story.title}</h2>
+              <hr />
+              <MarkdownGitHub
+                source={story.body}
+              />
+              <button className='story-btn vote' onClick={() => this.selectStory(story)}>Vote!</button>
+              {/* TODO: only view in github when github issue */}
+              <button className='story-btn view-in-gh' onClick={() => openInNewTab(story.sourceUrl)}>View in Github</button>
+            </div>
+          )
+        }
+        return null
       })
     }
+
+    let votedStories
+    if (Array.isArray(this.props.stories) && this.props.stories.length > 0) {
+      votedStories = this.props.stories.map((story) => {
+        if (story.voteValue) {
+          return (
+            <div className='story-box' key={`story:${story.title}`}>
+              <h2 className='title'>{story.title}</h2>
+              <hr />
+              <b>swag:{story.voteValue}</b> applied
+              <hr />
+              {/* TODO: only view in github when github issue */}
+              <button className='story-btn view-in-gh' onClick={() => openInNewTab(story.sourceUrl)}>View in Github</button>
+            </div>
+          )
+        }
+        return null
+      })
+    }
+
+    const hasUnvotedStories = unvotedStories.find(val => val !== null)
+    const hasVotedStories = votedStories.find(val => val !== null)
 
     return (
       <React.Fragment>
@@ -54,10 +79,14 @@ class Choose extends React.Component {
           </div>
         ) : (
           <React.Fragment>
-            <h3>Stories</h3>
+            <h3>Unswagged Stories</h3>
             <div className='stories-list'>
               {/* TODO: programmatically show/set swag label. */}
-              {storiesList || <li>No stories remain in this room.</li>}
+              {hasUnvotedStories ? unvotedStories : <li>No stories remain in this room.</li>}
+            </div>
+            <h3>Swagged Stories</h3>
+            <div className='stories-list'>
+              {hasVotedStories ? votedStories : <li>You haven't voted on any stories in this room.</li>}
             </div>
           </React.Fragment>
         )}
@@ -72,7 +101,8 @@ const mapStateToProps = (state) => {
     roomId: room.roomId,
     roomConnected: room.roomConnected,
     stories: room.stories,
-    votingLabel: room.votingLabel
+    votingLabel: room.votingLabel,
+    users: room.users
   }
 }
 
