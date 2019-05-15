@@ -61,8 +61,8 @@ class Choose extends React.Component {
       })
     }
 
-    const hasUnvotedStories = unvotedStories.find(val => val !== null)
-    const hasVotedStories = votedStories.find(val => val !== null)
+    const hasUnvotedStories = unvotedStories ? unvotedStories.find(val => val !== null) : false
+    const hasVotedStories = votedStories ? votedStories.find(val => val !== null) : false
 
     return (
       <React.Fragment>
