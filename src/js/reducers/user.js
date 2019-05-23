@@ -2,7 +2,8 @@ import {
   USER_LOGIN,
   USER_LOGOUT,
   FETCHING_MEMBERSHIPS,
-  MEMBERSHIPS_LISTED
+  MEMBERSHIPS_LISTED,
+  FETCHING_MEMBERSHIPS_TIMEOUT
 } from '../constants/action_types'
 
 const initialState = {
@@ -51,6 +52,12 @@ export default function userReducer (state = initialState, action) {
         membershipsFetched: true,
         orgs: action.orgs,
         repos: action.repos
+      }
+
+    case FETCHING_MEMBERSHIPS_TIMEOUT:
+      return {
+        ...state,
+        membershipsFetchFailed: true
       }
 
     default:

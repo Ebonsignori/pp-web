@@ -11,6 +11,7 @@ import {
   OPEN_MODAL,
   WS_STORY,
   FETCHING_ISSUES,
+  FETCHING_ISSUES_TIMEOUT,
   ISSUES
 } from '../constants/action_types'
 
@@ -24,6 +25,7 @@ const initialState = {
   users: [],
   userVote: undefined,
   issuesFetched: false,
+  issueFetchTimeout: false,
   issues: [],
   privileges: undefined,
   removedFromRoom: false
@@ -124,17 +126,33 @@ export default function roomReducer (state = initialState, action) {
     case FETCHING_ISSUES:
       return {
         ...state,
+        fetchingIssues: true,
+        issueFetchTimeout: false,
         issuesFetched: false
+      }
+
+    case FETCHING_ISSUES_TIMEOUT:
+      return {
+        ...state,
+        fetchingIssues: false,
+        issueFetchTimeout: true
       }
 
     // TODO: move? For creating room
     case ISSUES:
-      return {
-        ...state,
-        issuesFetched: true,
-        issues: action.issues
+      if (!state.issueFetchTimeout) {
+        return {
+          ...state,
+          fetchingIssues: false,
+          issuesFetched: true,
+          issues: action.issues
+        }
+      } else {
+        return {
+          ...state
+        }
       }
-    
+
     default:
       return state
   }

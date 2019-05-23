@@ -121,48 +121,44 @@ class CreateRoom extends React.Component {
     }
 
     let issueDisplay
-    if (this.state.githubAdded) {
-      if (this.props.issuesFetched) {
-        issueDisplay = <div className='issue-list-wrapper'>
-          <h2>Github issues for {this.state.repoOwner}/{this.state.repoName}</h2>
-          <div className='issue-list'>
-            {githubIssues || <li>No issues found with label {this.state.issueLabel}</li>}
-          </div>
+    if (this.props.fetchingIssues) {
+      issueDisplay = <div>
+        <p>Fetching issues for {this.state.repoOwner}/{this.state.repoName} ... </p>
+        <Loader
+          type='Puff'
+          color='#00BFFF'
+          height='100'
+          width='100'
+        />
+      </div>
+    } else if (this.props.issuesFetched) {
+      issueDisplay = <div className='issue-list-wrapper'>
+        <h2>Github issues for {this.state.repoOwner}/{this.state.repoName}</h2>
+        <div className='issue-list'>
+          {githubIssues || <li>No issues found with label {this.state.issueLabel}</li>}
         </div>
-      } else {
-        issueDisplay = <div>
-          <p>Fetching issues for {this.state.repoOwner}/{this.state.repoName} ... </p>
-          <Loader
-            type='Puff'
-            color='#00BFFF'
-            height='100'
-            width='100'
-          />
-        </div>
-      }
+      </div>
+    } else if (!this.props.githubLinked) {
+      issueDisplay = <div>You must link your account to Github in the login modal to import Github issues.</div>
     } else {
-      if (!this.props.githubLinked) {
-        issueDisplay = <div>You must link your account to Github in the login modal to import Github issues.</div>
-      } else {
-        issueDisplay = <div className='add-from-github'>
-          <label>Repo Owner: (e.g. SalesVista)</label>
-          <input value={this.state.repoOwner} onChange={(event) => this.setState({ repoOwner: event.target.value })} />
-          <label>Repo Name: (e.g. reqs)</label>
-          <input value={this.state.repoName} onChange={(event) => this.setState({ repoName: event.target.value })} />
-          <label>With Issue Label: (e.g. swag:ready)</label>
-          <input value={this.state.issueLabel} onChange={(event) => this.setState({ issueLabel: event.target.value })} />
-          <br />
-          {this.state.issueFetchFieldMissing && <p>Please enter all fields</p>}
-          <button onClick={this.addGithubIssues}>Add stories from github</button>
-        </div>
-      }
+      issueDisplay = <div className='add-from-github'>
+        <label>Repo Owner: (e.g. SalesVista)</label>
+        <input value={this.state.repoOwner} onChange={(event) => this.setState({ repoOwner: event.target.value })} />
+        <label>Repo Name: (e.g. reqs)</label>
+        <input value={this.state.repoName} onChange={(event) => this.setState({ repoName: event.target.value })} />
+        <label>With Issue Label: (e.g. swag:ready)</label>
+        <input value={this.state.issueLabel} onChange={(event) => this.setState({ issueLabel: event.target.value })} />
+        <br />
+        {this.state.issueFetchFieldMissing && <p>Please enter all fields</p>}
+        <button onClick={this.addGithubIssues}>Add stories from github</button>
+      </div>
     }
 
     return (
       <div className='create-room-wrapper'>
         <h1>Create Room</h1>
         <div className='create-room-options-list'>
-          <label>
+          {/* <label>
           Room Name: <input value={this.state.roomName} onChange={(event) => this.setState({
               roomName: event.target.value
             })} />
@@ -206,14 +202,19 @@ class CreateRoom extends React.Component {
 
           <p>TODO: Vote value type</p>
           <p>TODO: Users allowed in room</p>
-          <p>TODO: Permissions for each phase</p>
+          <p>TODO: Permissions for each phase</p> */}
 
         </div>
         <h2>Stories</h2>
-        <p>TODO: Manual stories here</p>
+        {!this.props.issueFetchTimeout && !this.props.issuesFetched && <p>Specify repo to fetch Github issues (stories) from.</p> }
+        {this.props.issueFetchTimeout && <h3>Failed to fetch anything for specified repo. Please <span
+          className='span-link'
+          onClick={() => window.open(GH_APP_INSTALL_URL)}>Install the Planning Poker App</span> for the user or org where the repo is located. </h3>
+        }
         {this.props.issuesFetched && <p>Don't see any issues? <span
           className='span-link'
-          onClick={() => window.open(GH_APP_INSTALL_URL)}>Install the Planning Poker App</span> for your repo.</p>}
+          onClick={() => window.open(GH_APP_INSTALL_URL)}>Install the Planning Poker App</span> for your repo.</p>
+        }
         {issueDisplay}
         <br />
         <button className='create-room-btn' onClick={this.createRoom}>Create Room</button>
@@ -224,7 +225,9 @@ class CreateRoom extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    fetchingIssues: state.room.fetchingIssues,
     issuesFetched: state.room.issuesFetched,
+    issueFetchTimeout: state.room.issueFetchTimeout,
     issues: state.room.issues,
     loggedIn: state.user.loggedIn,
     username: state.user.username,

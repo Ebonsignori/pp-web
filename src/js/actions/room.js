@@ -8,12 +8,14 @@ import {
   CREATING_ROOM,
   ISSUES,
   FETCHING_ISSUES,
+  FETCHING_ISSUES_TIMEOUT,
   REMOVE_USER,
   DECIDE_VOTE
 } from '../constants/action_types'
 
-import { socket } from '../app'
+import { socket, store } from '../app'
 import { jsonPost, jsonGet } from '../utility/fetch'
+import { ISSUE_FETCH_TIMEOUT } from '../config/config'
 
 export function setCreatingRoom (creatingRoom) {
   return {
@@ -23,6 +25,13 @@ export function setCreatingRoom (creatingRoom) {
 }
 
 export function fetchGithubIssues (owner, repo, label) {
+  // Set a timeout that if reached and issues have not been reached, issues weren't fetched correctly
+  window.setTimeout(() => {
+    if (!store.getState().room.issuesFetched) {
+      store.dispatch({ type: FETCHING_ISSUES_TIMEOUT })
+    }
+  }, ISSUE_FETCH_TIMEOUT)
+
   return async dispatch => {
     dispatch({
       type: FETCHING_ISSUES

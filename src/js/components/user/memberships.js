@@ -38,8 +38,11 @@ class Memberships extends React.Component {
     return (
       <React.Fragment>
         {/* TODO: Loader */}
-        {!this.props.membershipsFetched ? (
-          <div className='flex-center'>
+        {this.props.membershipsFetchFailed ? <h3>Failed to fetch anything for specified repo. Please <span
+          className='span-link'
+          onClick={() => window.open(GH_APP_INSTALL_URL)}>Install the Planning Poker App</span> for the user or org where the repo is located.
+        </h3>
+          : !this.props.membershipsFetched ? (<div className='flex-center'>
             <p>Fetching memberships ... </p>
             <Loader
               type='Puff'
@@ -48,16 +51,16 @@ class Memberships extends React.Component {
               width='100'
             />
           </div>
-        ) : (
-          <React.Fragment>
-            <h3>Don't see the repo you're looking for? <span
-              className='span-link'
-              onClick={() => window.open(GH_APP_INSTALL_URL)}>Install the Planning Poker App</span> for the user or org where the repo is located.</h3>
-            <div className='repoList'>
-              {repoList || <li>No repos available.</li>}
-            </div>
-          </React.Fragment>
-        )}
+          ) : (
+            <React.Fragment>
+              <h3>Don't see the repo you're looking for? <span
+                className='span-link'
+                onClick={() => window.open(GH_APP_INSTALL_URL)}>Install the Planning Poker App</span> for the user or org where the repo is located.</h3>
+              <div className='repoList'>
+                {repoList || <li>No repos available.</li>}
+              </div>
+            </React.Fragment>
+          )}
       </React.Fragment>
     )
   }
@@ -66,6 +69,7 @@ class Memberships extends React.Component {
 const mapStateToProps = (state) => {
   return {
     membershipsFetched: state.user.membershipsFetched,
+    membershipsFetchFailed: state.user.membershipsFetchFailed,
     orgs: state.user.orgs,
     repos: state.user.repos
   }

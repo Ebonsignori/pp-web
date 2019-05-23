@@ -1,6 +1,7 @@
 // Memberships (Orgs and Repos)
 export const FETCHING_MEMBERSHIPS = 'FETCHING_MEMBERSHIPS'
 export const MEMBERSHIPS_LISTED = 'MEMBERSHIPS_LISTED'
+export const FETCHING_MEMBERSHIPS_TIMEOUT = 'FETCHING_MEMBERSHIPS_TIMEOUT'
 
 // Room
 export const CREATING_ROOM = 'CREATING_ROOM'
@@ -37,6 +38,7 @@ export const WS_USER_NOT_LOGGED_IN = 'WS_USER_NOT_LOGGED_IN'
 // - - - Room - - -
 // Issues
 export const FETCHING_ISSUES = 'FETCHING_ISSUES'
+export const FETCHING_ISSUES_TIMEOUT = 'FETCHING_ISSUES_TIMEOUT'
 export const ISSUES = 'ISSUES' // TODO: remove WS issues as now fetching /w REST
 export const WS_STORIES = 'WS_STORIES'
 export const WS_STORY = 'WS_STORY'
