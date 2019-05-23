@@ -50,7 +50,7 @@ class JoinRoomModal extends React.Component {
 
   render () {
     let body = <React.Fragment>
-      <p>Join room as user: {this.props.username}?</p>
+      <p>Join room as {this.props.isGuest ? 'guest' : 'user'}: {this.props.username}?</p>
       <button onClick={() => this.joinRoom()}>Yes</button>
       <button onClick={() => this.props.dispatch(logout())}>No, logout</button>
     </React.Fragment>
@@ -124,6 +124,7 @@ const mapStateToProps = (state) => {
     loggedIn: state.user.loggedIn,
     roomId: state.room.roomId,
     username: state.user.username,
+    isGuest: state.user.isGuest,
     isOpen: state.modal[JOIN_ROOM],
     errorContext: state.socket.errorContext,
     errorType: state.socket.errorType

@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-import { API_URL, WEBSOCKET_TIMEOUT } from '../config/config'
+import { API_URL, WEBSOCKET_TIMEOUT, SOCKET_KEEP_ALIVE_POLL_INTERVAL } from '../config/config'
 import { WEBSOCKET_ACTIONS, WS_REMOVE_USER } from '../constants/action_types'
 import { readProperty } from '../utility/localStorage';
 
@@ -36,6 +36,14 @@ export function initSocket (store) {
       })
     })
   )
+
+  let keepAliveInterval
+  socket.on('connect', () => {
+    keepAliveInterval = setInterval(() => socket.emit('keep_alive', true), SOCKET_KEEP_ALIVE_POLL_INTERVAL)
+  })
+  socket.on('disconnect', () => {
+    if (keepAliveInterval) clearInterval(keepAliveInterval)
+  })
 
   return socket
 }
