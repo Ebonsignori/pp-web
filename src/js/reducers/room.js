@@ -86,7 +86,6 @@ export default function roomReducer (state = initialState, action) {
         roomConnected: true
       }
 
-    // Account for failed room fetch
     case WS_STORIES:
       return {
         ...state,

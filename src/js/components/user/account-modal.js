@@ -48,6 +48,7 @@ class AccountModal extends React.Component {
         this.setState({ disabled: '' })
         this.closeModal()
         this.props.dispatch(loggedIn(this.state.profile))
+        window.location.reload()
       }
     }, 1000)
   }
